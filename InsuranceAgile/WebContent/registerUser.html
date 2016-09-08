@@ -1,0 +1,141 @@
+
+<input type="button" ng-click="openModal('registerUser')" value ="show" >
+
+  
+<!-- register -->
+		<div id="registerUser" class = "modal fade">
+			<div class="row">
+				<div class="col-sm-3">
+				</div>
+				<div class="col-sm-6">	
+					<div class = "row" align="center">
+						<form class="modal-content animate" name="registerForm">
+							<div class="row">
+								<div class="container">
+									<span ng-click="closeModal('registerUser')" class="close" >&times;</span>
+								</div>
+							</div>
+							<div class="row">
+								<center>
+										<img src="images/profile.png" alt="Avatar" width= 20% height=20% >
+										<br>
+										<big><big><big>Register as {{ userType }}</big></big></big>
+									</center>
+							</div>
+							<div class="row">
+								<div class="col-sm-2">	
+										<label><b>Firstname</b></label>
+								</div>
+								<div class = "col-sm-4">
+										<input type="text" placeholder="Ex. Aniruddha" ng-model="fname" required>
+										<div class="errMsg"> {{ registerFnameErrMsg }}</div>
+								</div>
+								<div class="col-sm-2">
+										<label><b>Lastname</b></label>
+								</div>
+								<div class="col-sm-4">	
+										<input type="text" placeholder="Ex. Daryapurkar" ng-model="lname" required>
+										<div class="errMsg"> {{ registerLnameErrMsg }}</div>
+								</div> 
+							</div>
+	
+							<div class="row">
+								<div class="col-sm-2">
+										<label><b>Address</b></label>
+								</div>
+								<div class="col-sm-10">	
+									<input type="text" placeholder="Ex. Block no., Street name, Area" ng-model="address" required >	
+									<div class="errMsg"> {{ registerAddressErrMsg }}</div>
+								</div> 
+							</div>
+							
+							<div class="row">
+								<div class="col-sm-2">	
+										<label><b>State</b></label>
+								</div>
+								<div class = "col-sm-4">
+										<input type="text" placeholder="Ex. Maharashtra" ng-model="state" required>
+										<div class="errMsg"> {{ registerFnameErrMsg }}</div>
+								</div>
+								<div class="col-sm-1">
+										
+								</div>
+								<div class="col-sm-1" >
+										<label><b>City</b></label>
+								</div>
+								<div class="col-sm-4">	
+										<input type="text" placeholder="Ex. Pune" ng-model="city" required>
+										<div class="errMsg"> {{ registerCityErrMsg }}</div>
+								</div> 
+							</div>
+	
+							<div class="row">
+								<div class="col-sm-2">
+										<label><b>Contact</b></label>
+								</div>
+								<div class="col-sm-10">	
+									<input type="number" placeholder="Only digits" ng-model="contact" required>
+									<div class="errMsg"> {{ registerContactErrMsg }}</div>
+								</div> 
+							</div>
+							
+							<div class="row">
+								<div class="col-sm-2">
+										<label><b>Email</b></label>
+								</div>
+								<div class="col-sm-10">	
+									<input type="email" placeholder="Ex. abc.mnq@xyz.com" ng-model="email" required >	
+									<div class="errMsg"> {{ registerEmailErrMsg }}</div>
+								</div> 
+							</div>
+							
+							<div class="row">
+								<div class="col-sm-2">
+									<label><b>Username</b></label>
+								</div>
+								<div class="col-sm-10">	
+									<input type="text" placeholder="Combination of Alphabets and numbers" ng-model="uname" 
+											ng-change="usernameCheck()" >
+									<div class="errMsg"> {{ registerUnameErrMsg }}</div>
+								</div> 
+							</div>
+							
+							<div class="row">
+								<div class="col-sm-2">
+									<label><b>Password</b></label>
+								</div>
+								<div class="col-sm-10">	
+									<input type="password" ng-model="psw" ng-change = "passwordLengthCheck()" >
+									<div class="errMsg"> {{ registerPswErrMsg }}</div>
+								</div> 
+							</div>
+							
+							<div class="row">
+								<div class="col-sm-2">
+									<label><b>Re-enter Password</b></label>
+								</div>
+								<div class="col-sm-10">	
+									<input type="password" ng-model="cpsw" required ng-change = "passwordMatch()" >
+									<div class="errMsg"> {{ registerCpswErrMsg }}</div>
+								</div> 
+							</div>
+							
+							<div class="row">
+								<div class="col-sm-4">			
+ 									</div>
+									<div class="col-sm-4">			
+										<button class="btn btn-success btn-block" type="submit"  ng-click="registerUser()">Register</button>  
+									</div>
+									<div class="col-sm-4">
+									</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="col-sm-3">
+				</div>
+			</div>
+		</div>
+		
+<!-- register -->
+
