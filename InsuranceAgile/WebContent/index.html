@@ -10,10 +10,232 @@
 <div class="dropdown">
   <button class="dropbtn">Login</button>
   <div class="dropdown-content">
-    <a href="#loginAgent" ng-click="setUserType('AGENT')">Agent Login</a>
-    <a href="#loginDC" ng-click="setUserType('DIRECT CUSTOMER')">Customer Login</a>
+   <span ng-click="openModal('loginUser', 'AGENT')">Agent</span>    
+   <span ng-click="openModal('loginUser', 'DIRECT CUSTOMER')">Direct Customer</span>
+   <span ng-click="openModal('loginUser', 'MANAGED CUSTOMER')">Managed Customer</span>
     
   </div>
 </div>
+
+
+
+
+
+
+<!-- modals start here-->
+
+				<!-- login modal starts-->
+						<div id="loginUser" class = "modal fade">
+							<div class="row">
+								<div class="col-sm-3">
+								</div>
+								<div class="col-sm-6">	
+									<div class = "row" align="center">
+										<form class="modal-content animate" name="registerForm">
+											<div class="row">
+												<div class="container">
+													<span ng-click="closeModal('loginUser')" class="close" >&times;</span>
+												</div>
+											</div>
+											<div class="row">
+												<center>
+														<img src="images/profile.png" alt="Avatar" width= 20% height=20% >
+														<br>
+														<big><big><big>LOGIN AS {{ userType }}</big></big></big>
+													</center>
+											</div>
+											<div class="row">
+												<div class="col-sm-2">	
+														<label><b>Username</b></label>
+												</div>
+												<div class = "col-sm-10">
+														<input type="text" placeholder="Enter Username" class="form-control" ng-model="uname">
+												<div class="errMsg"> {{	unameErr }}</div>
+												</div> 
+											</div>
+					
+											<div class="row">
+												<div class="col-sm-2">
+														<label><b>Password</b></label>
+												</div>
+												<div class="col-sm-10">	
+													<input type="password" placeholder="Enter password" class="form-control" ng-model="pass">
+												<div class="errMsg" > {{	passwordErr	}}</div>
+											</div> 
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-4">			 
+				 									</div>
+													<div class="col-sm-4">			
+														<button type="submit" class="btn btn-lg btn-info"  ng-click="login_user(uname,pass)" >Submit</button>
+													</div>
+													<div class="col-sm-4">
+													</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-8">			 
+				 								</div>
+													<div class="col-sm-4">			
+														<span ng-click="openModal('registerUser', 'null')">New user? Register</a></span>			
+													</div>
+												<div class="col-sm-4">
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+								<div class="col-sm-3">
+								</div>
+							</div>
+						</div>
+						
+				<!-- login modal ends -->
+				
+				
+				
+				<!-- register modal starts -->
+						<div id="registerUser" class = "modal fade">
+							<div class="row">
+								<div class="col-sm-3">
+								</div>
+								<div class="col-sm-6">	
+									<div class = "row" align="center">
+										<form class="modal-content animate" name="registerForm">
+											<div class="row">
+												<div class="container">
+													<span ng-click="closeModal('registerUser')" class="close" >&times;</span>
+												</div>
+											</div>
+											<div class="row">
+												<center>
+														<img src="images/profile.png" alt="Avatar" width= 20% height=20% >
+														<br>
+														<big><big><big>Register as {{ userType }}</big></big></big>
+													</center>
+											</div>
+											<div class="row">
+												<div class="col-sm-2">	
+														<label><b>Firstname</b></label>
+												</div>
+												<div class = "col-sm-4">
+														<input type="text" placeholder="Ex. Aniruddha" ng-change="firstnameToUpper()" ng-model="fname" required>
+														<div class="errMsg" > {{ registerFnameErrMsg }}</div>
+												</div>
+												<div class="col-sm-2">
+														<label><b>Lastname</b></label>
+												</div>
+												<div class="col-sm-4">	
+														<input type="text" placeholder="Ex. Daryapurkar" ng-change="lastnameToUpper()" ng-model="lname" required>
+														<div class="errMsg"> {{ registerLnameErrMsg }}</div>
+												</div> 
+											</div>
+					
+											<div class="row">
+												<div class="col-sm-2">
+														<label><b>Address</b></label>
+												</div>
+												<div class="col-sm-10">	
+													<input type="text" placeholder="Ex. Block no., Street name, Area" ng-change="addressToUpper()" ng-model="address" required >	
+													<div class="errMsg"> {{ registerAddressErrMsg }}</div>
+												</div> 
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-2">	
+														<label><b>State</b></label>
+												</div>
+												<div class = "col-sm-4">
+														<input type="text" placeholder="Ex. Maharashtra" ng-change="stateToUpper()" ng-model="state" required>
+														<div class="errMsg"> {{ registerFnameErrMsg }}</div>
+												</div>
+												<div class="col-sm-1">
+														
+												</div>
+												<div class="col-sm-1" >
+														<label><b>City</b></label>
+												</div>
+												<div class="col-sm-4">	
+														<input type="text" placeholder="Ex. Pune" ng-change="cityToUpper()" ng-model="city" required>
+														<div class="errMsg"> {{ registerCityErrMsg }}</div>
+												</div> 
+											</div>
+					
+											<div class="row">
+												<div class="col-sm-2">
+														<label><b>Contact</b></label>
+												</div>
+												<div class="col-sm-10">	
+													<input type="number" placeholder="Only digits" ng-model="contact" required>
+													<div class="errMsg"> {{ registerContactErrMsg }}</div>
+												</div> 
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-2">
+														<label><b>Email</b></label>
+												</div>
+												<div class="col-sm-10">	
+													<input type="email" placeholder="Ex. abc.mnq@xyz.com" 
+														ng-change="ifUserExists()" ng-model="email"  >	
+													<div class="errMsg"> {{ registerEmailErrMsg }}</div>
+													<div class="errMsg"> {{ registerEmailUserExists }}</div>
+												</div> 
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-2">
+													<label><b>Username</b></label>
+												</div>
+												<div class="col-sm-10">	
+													<input type="text" placeholder="Combination of Alphabets and numbers" ng-model="uname" 
+															ng-change="usernameCheck()" >
+													<div class="errMsg"> {{ registerUnameErrMsg }}</div>
+													<div class="errMsg"> {{ registerUnameUserExists }}</div>
+												</div> 
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-2">
+													<label><b>Password</b></label>
+												</div>
+												<div class="col-sm-10">	
+													<input type="password" ng-model="psw" ng-change = "passwordLengthCheck()" >
+													<div class="errMsg"> {{ registerPswErrMsg }}</div>
+												</div> 
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-2">
+													<label><b>Re-enter Password</b></label>
+												</div>
+												<div class="col-sm-10">	
+													<input type="password" ng-model="cpsw" required ng-change = "passwordMatch()" >
+													<div class="errMsg"> {{ registerCpswErrMsg }}</div>
+												</div> 
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-4">			 
+				 									</div>
+													<div class="col-sm-4">			
+														<button class="btn btn-success btn-block" type="submit"  ng-click="registerUser()" >Register</button>  
+													</div>
+													<div class="col-sm-4">
+													</div>
+											</div>
+										</form>
+									</div>
+								</div>
+								<div class="col-sm-3">
+								</div>
+							</div>
+						</div>
+		
+			<!-- register -->
+				
+<!-- modals end here -->
+
 </body>
 </html>
