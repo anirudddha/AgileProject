@@ -71,6 +71,7 @@ var serverAddr = "http://10.20.14.83:9002";
 						}
 						$('#' + modalName).modal('show');
 					}
+					
 					$scope.closeModal = function(modalName){
 						$('#' + modalName).modal('hide');
 					}
@@ -80,19 +81,23 @@ var serverAddr = "http://10.20.14.83:9002";
 						$scope.unameErr = "";
 						$scope.passwordErr = "";
 						
-						if($scope.uname.length == 0){
+						if($scope.loginUname.length == 0){
 							$scope.unameErr = "Enter username";
 							return;
 						}
 						
-						if($scope.pass.length == 0){
+						if($scope.loginPass.length == 0){
 							$scope.passwordErr = "Enter password";
 							return;
 						}
 				
-						$rootScope.isLogged =iService.login($scope.uname ,$scope.pass , $http, $scope);
+						$rootScope.isLogged =iService.login($scope.loginUname ,$scope.loginPass , $http, $scope);
 				        
-				        }
+				    }
+					
+					$scope.loginUnameToUpper = function(){
+						$scope.loginUname = $scope.loginUname.toUpperCase();
+					}
 					
 					$scope.firstnameToUpper = function(){
 						$scope.fname = $scope.fname.toUpperCase();
@@ -116,7 +121,7 @@ var serverAddr = "http://10.20.14.83:9002";
 					
 					$scope.usernameCheck = function(){		
 						un = $scope.uname;
-						var upChar;
+
 						var len = $scope.uname.length;
 				
 						// if number or characters then only accept
@@ -170,52 +175,9 @@ var serverAddr = "http://10.20.14.83:9002";
 						}
 					}
 					
-			$scope.ifUserExists = function(){
-						
-						var uname = $scope.uname;
-						var email = $scope.email;
-						
-						if($scope.uname.length >0 && $scope.email.length >0)
-							{
-								//	fire query to server
-								$http({
-									method	:	'GET',
-									url		:	serverAddr + '/imservices/user/check?userName=' + uname + '&email=' + email ,
-									header	:	
-									{
-										'Content-Type' : 'application/json',
-										'Access-Control-Allow-Origin' :	serverAddr  
-									}
-								}).then(function mySucces(response) {
-									
-									$scope.registerEmailUserExists = "";
-									$scope.registerUnameUserExists = "";
-								
-									if(response.data.status == "email-fail"){
-										$scope.registerEmailUserExists = "Email exists";
-										$scope.userExists = true;
-									}
-									if (response.data.status == "userName-fail"){
-										$scope.registerUnameUserExists = "Username exists";
-										$scope.userExists = true;
-									}
-									
-									// ask for this to sir
-				//					if(response.data.status == "userName-email-fail"){
-				//						$scope.registerEmailUserExists = "Email exists";
-				//						$scope.registerUnameUserExists = "Username exists";
-				//						return true;
-				//					}
-								}
-								, function myError(response) {
-							        $scope.myWelcome = response.statusText;
-								})		
-					}
-				}
-				
-			
-				$scope.registerUser = function(){		
+					$scope.registerUser = function(){		
 						// check length of username
+						$scope.ifUserExists();
 
 						if($scope.uname.length < 6){
 							$scope.registerUnameErrMsg = "Username should be at least 6 characters long";
@@ -247,11 +209,14 @@ var serverAddr = "http://10.20.14.83:9002";
 								$scope.registerCpswErrMsg = "";
 							}
 						//check for ifUserExists
-						
-						$scope.userExists = false;
-						
-						$scope.ifUserExists();	
-						
+						//$scope.userExists = false;
+							
+						if($scope.fname.length == 0 || $scope.lname.length == 0 || $scope.address.length == 0 || $scope.state.length == 0 || 
+								$scope.city.length == 0 || $scope.contact.length == 0 || $scope.email.length == 0 || $scope.uname.length == 0 || 
+								$scope.psw.length == 0 || $scope.cpsw.length == 0 )
+							{
+								return;
+							}
 						
 						if ($scope.userExists == true)
 							{
@@ -282,15 +247,67 @@ var serverAddr = "http://10.20.14.83:9002";
 									userType	:	"DIRECR CUSTOMER"
 								}
 						}).then(function successCallback(response){
-							alert ("Registered successfully");		
+							alert ("Registered successfully");
+							
+							$scope.closeModal('registerUser');
 							// NOW REDIRECT TO LOGIN PAGE
 						}, 
 						
 						function errorCallback(response){
 								alert("Error : \n" + response.data);	
 						});
-					}
+					};
 
+					
+			$scope.ifUserExists = function(){
+						
+						var uname = $scope.uname;
+						var email = $scope.email;
+						
+						
+								//	fire query to server
+								$http({
+									method	:	'GET',
+									url		:	serverAddr + '/imservices/user/check?userName=' + uname + '&email=' + email ,
+									header	:	
+									{
+										'Content-Type' : 'application/json',
+										'Access-Control-Allow-Origin' :	serverAddr  
+									}
+								}).then(function mySucces(response) {
+									
+									$scope.registerEmailUserExists = "";
+									$scope.registerUnameUserExists = "";
+								
+									if(response.data.status == "email-fail"){
+										$scope.registerEmailUserExists = "Email exists";
+										$scope.userExists = true;
+									}
+									else
+										if (response.data.status == "userName-fail"){
+										$scope.registerUnameUserExists = "Username exists";
+										$scope.userExists = true;
+									}
+										else
+											{
+												$scope.userExists = false;
+											}
+									
+									// ask for this to sir
+				//					if(response.data.status == "userName-email-fail"){
+				//						$scope.registerEmailUserExists = "Email exists";
+				//						$scope.registerUnameUserExists = "Username exists";
+				//						return true;
+				//					}
+								}
+								, function myError(response) {
+							        $scope.myWelcome = response.statusText;
+								})		
+
+				};
+				
+			
+				
 	
 				
 					
@@ -310,10 +327,7 @@ var serverAddr = "http://10.20.14.83:9002";
 
 //Aniruddha's code starts here'
 
-function registerController($scope, $location, $http, $cookieStore){
-					
-			
-		}
+
 
 
 //Aniruddha's code ends here

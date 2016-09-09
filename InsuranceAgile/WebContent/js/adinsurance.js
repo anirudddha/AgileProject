@@ -7,7 +7,15 @@ var insuranceApp = angular.module('AD_insuranceApp', ['ngRoute', 'ngCookies']);
 function registerController($scope, $location, $http, $cookieStore){
 	
 	console.log('reached controller');
-	
+	$scope.hide = function(){
+		if ($scope.homepageBGImage){
+			$scope.homepageBGImage = false;
+		}
+		else
+			{
+			$scope.homepageBGImage = true;
+		}
+	}
 }
 
 
