@@ -8,6 +8,55 @@
 	font-size: small;
 }
 
+.margin-5px{
+	margin: 5px;
+}
+
+
+input[type=search] {
+  color	: white;
+  width	: 30%;
+  display: inline;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: #555;
+  background-color: #838185;
+  background-image: none;
+  border-radius: 0px;
+  border-right-color :#555;
+  border-width : 0px;
+   -webkit-transition: width 0.4s ease-in-out;
+    	  transition: width 0.4s ease-in-out;
+}
+
+input[type=search]:focus {
+    width: 70%;
+    color	: white;
+    border-width: 0px;
+    background-color: #838185;
+}
+
+input[type=search]:hover {
+    width: 70%;
+    color	: white;
+    border-width: 0px;
+    background-color: #e6e6e6;
+}
+
+.search-button{
+  display: inline;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: #555;
+  background-color: #838185;
+  border-width : 0px;
+  border-radius: 0px;
+  border-left-color: #555;
+  margin-left : -5px;
+ }
+
 div .row  .xxx:HOVER{
 	 background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
 	 color: white;
@@ -16,10 +65,10 @@ div .row  .xxx:HOVER{
 body {font-family: Verdana,sans-serif;}
 
 header{
-	width:100%;
-	height:10px;
+	width  : 100%;
+	height : 
 	position: fixed;
-	background-color: #000000;
+	background-color: #4f5359;
 }
 
 footer{
@@ -36,25 +85,14 @@ footer{
 
 
 /* For grid layout */
-.row::after {
-    content: "";
-    clear: both;
-    display: block;
-}
+
 /* For all class elements  */
-[class*="col-"] {
-    float: left;
-    padding:2px;
-}
-
-
 
 /* Nav bar starts here */
 
 .navigationBar{
 	background-color: black;
 }
-
 
 .navigationBar .footerNav {
   list-style-type: none;
@@ -81,8 +119,6 @@ footer{
 
 
 /* Slider starts here */
-
-
 	.active {
 	  background-color: #717171;
 	}
@@ -198,10 +234,6 @@ footer{
     display: inline-block;
 	text-align: left;
 
-}
-
-.modal label.right-align{
-    text-align: right;
 }
 
 
