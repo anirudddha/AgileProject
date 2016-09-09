@@ -1,10 +1,13 @@
 var serverAddr = "http://10.20.14.83:9002";
 
-var insuranceApp = angular.module('insuranceApp', ['ngRoute']);
+var insuranceApp = angular.module('insuranceApp', ['ngRoute', 'ngCookies']);
 
 
 // a controller which will handle actions from the page 
-function registerController($scope, $location, $http){
+function registerController($scope, $location, $http, $cookieStore){
+	
+	$scope.userType = $cookieStore.get('userType');
+	
 	
 	$scope.openModal = function(modalName){
 		$('#' + modalName).modal('show');
@@ -14,32 +17,38 @@ function registerController($scope, $location, $http){
 	}
 	
 	$scope.firstnameToUpper = function(){
-		
+		$scope.fname = $scope.fname.toUpperCase();
 	}
 
-	$scope.firstnameToUpper = function(){
-		
+	$scope.lastnameToUpper = function(){
+		$scope.lname = $scope.lname.toUpperCase();
 	}
 
-	$scope.firstnameToUpper = function(){
-		
+//  not working for email
+//	$scope.emailToUpper = function(){
+//		$scope.email = $scope.email.toUpperCase();
+//		$scope.ifUserExists();
+//	}
+
+	$scope.addressToUpper = function(){
+		$scope.address = $scope.address.toUpperCase();
 	}
 
-	$scope.firstnameToUpper = function(){
-		
+	$scope.stateToUpper = function(){
+		$scope.state = $scope.state.toUpperCase();
 	}
-
-	$scope.firstnameToUpper = function(){
-		
+	
+	$scope.cityToUpper = function(){
+		$scope.city = $scope.city.toUpperCase();
 	}
-
+	
 	$scope.usernameCheck = function(){		
 		un = $scope.uname;
 		var upChar;
 		var len = $scope.uname.length;
 
-		//if number or characters then only accept
-		//try for space also
+		// if number or characters then only accept
+		// try for space also
 		if( ( (un.charCodeAt(len - 1) >= 65 ) && (un.charCodeAt(len - 1) <= 90 ) ||
 			(un.charCodeAt(len - 1) >= 97 ) && (un.charCodeAt(len - 1) <= 122 )||
 			(un.charCodeAt(len - 1) >= 48 ) && (un.charCodeAt(len - 1) <= 57) ) ){  
@@ -65,17 +74,14 @@ function registerController($scope, $location, $http){
 		len = $scope.uname.length;
 		
 		//convert uname to uppercase
-		if(un.charCodeAt(len - 1) >= 97 && un.charCodeAt(len - 1) <=  122 ){
-			upChar = String.fromCharCode(un.charCodeAt(len- 1) - 32) ;
-			un = un.slice(0, len - 1);
-			un = un.concat(upChar);
-			$scope.uname = un;
-		}
+		$scope.uname = $scope.uname.toUpperCase();
+		
+		$scope.ifUserExists();
 	}
 	
 	$scope.passwordLengthCheck = function(){
 		if ($scope.psw.length < 8){
-				$scope.registerPswErrMsg = "password should be at least 8 characters long";
+				$scope.registerPswErrMsg = "Password should be at least 8 characters long";
 			}
 		else
 			{
@@ -92,22 +98,121 @@ function registerController($scope, $location, $http){
 		}
 	}
 	
-	$scope.registerUser = function(){
+	$scope.ifUserExists = function(){
 		
+		var uname = $scope.uname;
+		var email = $scope.email;
+		
+		if($scope.uname.length >0 && $scope.email.length >0)
+			{
+				//	fire query to server
+				$http({
+					method	:	'GET',
+					url		:	serverAddr + '/imservices/user/check?userName=' + uname + '&email=' + email ,
+					header	:	
+					{
+						'Content-Type' : 'application/json',
+						'Access-Control-Allow-Origin' :	serverAddr  
+					}
+				}).then(function mySucces(response) {
+					
+					$scope.registerEmailUserExists = "";
+					$scope.registerUnameUserExists = "";
+				
+					if(response.data.status == "email-fail"){
+						$scope.registerEmailUserExists = "Email exists";
+						return true;
+					}
+					if (response.data.status == "userName-fail"){
+						$scope.registerUnameUserExists = "Username exists";
+						return true;
+					}
+					
+					// ask for this to sir
+//					if(response.data.status == "userName-email-fail"){
+//						$scope.registerEmailUserExists = "Email exists";
+//						$scope.registerUnameUserExists = "Username exists";
+//						return true;
+//					}
+				}
+				, function myError(response) {
+			        $scope.myWelcome = response.statusText;
+				})		
+	}
+	
+	$scope.registerUser = function(){		
 		// check length of username
 		if($scope.uname.length < 6){
 			$scope.registerUnameErrMsg = "Username should be at least 6 characters long";
 			$(Scope.uname).focus();
 			return;
 		}
+		else
+			{
+				$scope.registerUnameErrMsg = "";
+			}
+		// if password length doesn't satisfy to 8 chars long
+		if ($scope.psw.length < 8){
+			$scope.registerswErrMsg = "Password should be at least 8 characters long";
+			return;
+		}
+		else
+			{
+			$scope.registerswErrMsg = "";
+			}
+		
 		
 		// if password wrong dont proceed 
 		if ($scope.cpsw != $scope.psw){
 			$scope.registerCpswErrMsg = "Re-entered password mismatched";
 			return;
 		}
+		else
+			{
+				$scope.registerCpswErrMsg = "";
+			}
+		//check for ifUserExists
+		var flag = false;
+		$http({
+			method	:	'GET',
+			url		:	serverAddr + '/imservices/user/check?userName=' + uname + '&email=' + email ,
+			header	:	
+			{
+				'Content-Type' : 'application/json',
+				'Access-Control-Allow-Origin' :	serverAddr  
+			}
+		}).then(function mySucces(response) {
+			
+			$scope.registerEmailUserExists = "";
+			$scope.registerUnameUserExists = "";
+		
+			if(response.data.status == "email-fail"){
+				$scope.registerEmailUserExists = "Email exists";
+				flag = true;
+			}
+			if (response.data.status == "userName-fail"){
+				$scope.registerUnameUserExists = "Username exists";
+				flag = true;
+			}
+			
+			// ask for this to sir
+//			if(response.data.status == "userName-email-fail"){
+//				$scope.registerEmailUserExists = "Email exists";
+//				$scope.registerUnameUserExists = "Username exists";
+//				flag = true;
+//			}
+		}
+		, function myError(response) {
+	        $scope.myWelcome = response.statusText;
+		})		
 		
 		
+		if (flag == true)
+			{
+				//user exist
+				flag = false;
+				return;
+			}
 		
 		// fire POST request
 		$http({
@@ -117,7 +222,7 @@ function registerController($scope, $location, $http){
 			header	:	
 				{
 					'Content-Type' : 'application/json',
-					'Access-Control-Allow-Origin' :	serverAddr + '/imservices/user'
+					'Access-Control-Allow-Origin' :	serverAddr
 				},
 			data : 
 				{
@@ -133,20 +238,17 @@ function registerController($scope, $location, $http){
 					userType	:	"DIRECR CUSTOMER"
 				}
 		}).then(function successCallback(response){
-			alert ("Registered successfully");
-			
+			alert ("Registered successfully");		
 			// NOW REDIRECT TO LOGIN PAGE
-			
-			
 		}, 
 		
 		function errorCallback(response){
 				alert("Error : \n" + response.data);	
-		})	
+		});
 	}
 };
 
-
+}
 
 
 //give routing to pages
@@ -163,7 +265,7 @@ insuranceApp.config(function ($routeProvider){
 });
 
 //add controllers
-insuranceApp.controller('registerController',registerController);
+insuranceApp.controller('registerController',registerController );
 
 
 
