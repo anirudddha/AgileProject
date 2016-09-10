@@ -26,7 +26,7 @@ var serverAddr = "http://10.20.14.83:9002";
 			   
 					$http({
 							method : 'GET',
-								url : 'http://10.20.14.83:9002/imservices/login?userName='+uname+'&password='+pass,
+								url : serverAddr + '/imservices/login?userName='+uname+'&password='+pass,
 							headers : {
 										'Content-Type' : 'application/json',
 										'Access-Control-Allow-Origin': 'http://10.20.14.83:9002',
@@ -56,7 +56,8 @@ var serverAddr = "http://10.20.14.83:9002";
 			
 			
 			
-				}});
+				}
+		});
 
 		var controllers = {};
 		
