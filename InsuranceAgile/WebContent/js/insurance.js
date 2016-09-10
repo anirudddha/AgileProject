@@ -29,17 +29,21 @@ var serverAddr = "http://10.20.14.83:9002";
 								url : serverAddr + '/imservices/login?userName='+uname+'&password='+pass,
 							headers : {
 										'Content-Type' : 'application/json',
-										'Access-Control-Allow-Origin': 'http://10.20.14.83:9002',
+										'Access-Control-Allow-Origin': serverAddr,
 					
 													}
 						}).then(function successCallback(response) {
 							var data = response.data;
 							if(response.data.id!=null)
 								{
-							console.log("The USERID is"+data.id);
-							alert('successful login usertype '+$cookieStore.get("userType"));
-							$cookieStore.put('auth-token',response.data['auth-token']);
-		                    $cookieStore.put('uname',response.data.userName);
+									console.log("The USERID is"+data.id);
+									alert('successful login usertype '+$cookieStore.get("userType"));
+									$cookieStore.put('auth-token',response.data['auth-token']);
+				                    $cookieStore.put('uname',response.data.userName);
+				                    $scope.loginUname = "";
+				                    $scope.loginPass = "";
+				                    $closeModal('loginUser');
+				                    //redirect to next direct customer page
 								}
 							else
 								{
