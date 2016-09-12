@@ -1,7 +1,17 @@
 var serverAddr = "http://10.20.14.83:9002";
 
 var insuranceApp = angular.module('AD_insuranceApp', ['ngRoute', 'ngCookies']);
+insuranceApp.directive('ngNav', function() {
+	return {
+		restrict: 'E',//E = element, A = attribute, C = class, M = comment
+	
+		templateUrl: 'navbar.html',
+		controller : 'registerController',
+		link: function(scope, iElement, iAttrs) {
 
+		}
+	}
+});
 
 // a controller which will handle actions from the page 
 function registerController($scope, $location, $http, $cookieStore){
@@ -38,17 +48,30 @@ function registerController($scope, $location, $http, $cookieStore){
 					$scope.homepageBGImage = false;
 					$scope.productsDisplayDiv=true;
 					$scope.agentsDisplayDiv =false;
+					$scope.agentDetails = false;
+					$scope.productDetails = false;
 					
 	        }, function errorCallback(response) {
 	        		alert("Server Error. Try After Some time: " + response);
-	
 	        });
+			
+			$scope.searchProductName = "";
+			$scope.searchAgentUName = "";
 		
 		}
 		// view specific product
-		$scope.viewProductDetails = function(prod){
+		$scope.viewProductDetails = function(prd){
 			//on next view/modal
-			console.log(prod);
+			//console.log(agent);
+			$scope.detailProduct = prd;
+			$scope.agentDetails = false;
+			$scope.productDetails = true;
+			
+		}
+
+		$scope.hideProductDetails = function(){
+			$scope.agentDetails = false;
+			$scope.productDetails = false;
 		}
 		
 		
@@ -78,19 +101,30 @@ function registerController($scope, $location, $http, $cookieStore){
 					$scope.homepageBGImage = false;
 					$scope.agentsDisplayDiv = true;
 					$scope.productsDisplayDiv=false;
-					
+					$scope.agentDetails = false;
+					$scope.productDetails = false;
 					
 	        }, function errorCallback(response) {
 	        		alert("Server Error. Try After Some time: " + response);
-	
 	        });		
+			$scope.searchProductName = "";
+			$scope.searchAgentUName = "";
 		}
-		// view specific product
-		$scope.viewAgentDetails = function(agent){
+		
+		// view specific agent
+		$scope.viewAgentDetails = function(ag){
 			//on next view/modal
-			console.log(agent);
+			//console.log(agent);
+			$scope.detailAgent = ag;
+			$scope.agentDetails = true;
+			$scope.productDetails = false;
 		}
 
+		$scope.hideAgentDetails = function(){
+			$scope.agentDetails = false;
+			$scope.productDetails = false;
+		}
+		
 
 }
 //controller ends here

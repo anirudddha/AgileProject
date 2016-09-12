@@ -1,49 +1,28 @@
-<!-- HEADER WILL COME FROM THE SHELL PAGE -->
-<header>
-	<div class = "row">
-		<div class="col-sm-3">	
-				
-		</div>
-		<div class="col-sm-6" align="right" >
-			<center>
-				<input type="search" placeholder="Search policy">
-				<button type="button" class="btn btn-default search-button"> <span class="glyphicon glyphicon-search"></span> Search </button>
-			</center>
-		</div>
-		<div class="col-sm-3" align="right">
-
-				<label class = "headerlink"> help@lifeInsure.com </label>
-				Login_dropdown		    
-		</div>
-	</div>
-			
-	
-</header>
 
 <div class= "container-fluid" >
 	
-	<div class = "row" >
-		<div class = "col-sm-2" align="justify">
-			<img src = "images/logo1.png" width="171px" height="95px" >
+	<div class = "row header-white" >
+		<div class = "col-sm-2 common-function" align="center">
+			<a href="#/" class="anchor-big" ng-click="gotoHome()"> <span class="glyphicon glyphicon-home" > </span> Home</a>		
 		</div>
 		<div class = "col-sm-2 common-function" align="center">
-			<a href="#/" class="anchor-big"> <span class="glyphicon glyphicon-home" ng-click="gotoHome()"> Home</span> </a>		
+			<a href="#/" class="anchor-big" ng-click="getAllProducts()"> <span class = "glyphicon" >  </span> Products </a> 
 		</div>
 		<div class = "col-sm-2 common-function" align="center">
-			<a href="#/" class="anchor-big"> <span class = "glyphicon" ng-click="getAllProducts()"> Products </span> </a> 
-		</div>
-		<div class = "col-sm-2 common-function" align="center">
-			<a href="#/" class="anchor-big"> <span class = "glyphicon" ng-click="getAllAgents()"> Agents </span> </a> 
+			<a href="#/" class="anchor-big" ng-click="getAllAgents()"> <span class = "glyphicon" >  </span> Agents </a> 
 		</div>
 		<div class = "col-sm-2 common-function" align ="center">
-			<a href="#/" class="anchor-big"> <span class = "glyphicon" > Dummy </span> </a> 
+			<a href="#/" class="anchor-big" > <span class = "glyphicon" >  </span> About us </a> 
 		</div>
 		<div class = "col-sm-2 common-function" align="center">
-			<a href="#/" class="anchor-big"> <span class = "glyphicon" > Dummy</span> </a> 
+			<a href="#/" class="anchor-big" > <span class = "glyphicon" > </span> Contact us </a> 
 		</div>	
+		<div class = "col-sm-2 common-function" align="center">
+			<a href="#/" class="anchor-big" > <span class = "glyphicon" > </span> Login </a> 
+		</div>
 	</div>
-	
-	
+	<br>
+
 	<!-- here is all the data to be displayed instead of the background image -->
 			<div class = "row fade in" ng-show="homepageBGImage" >
 				<div class="fade in" >
@@ -52,52 +31,145 @@
 			</div>		
 	
 			<!--  displays products only  -->
-					<div class = "row"  ng-show="productsDisplayDiv">
-						<div class = "col-sm-3" ></div>
-						<div class = "col-sm-6 " > 	
+				<div class = "row"  ng-show="productsDisplayDiv" >
+				  <br>
+					<div class="col-sm-5 all-products-agents">
 							<div class = "fade in" >
 								<div class="row">
-									<div class="col-sm-5">
+									<div class="col-sm-4"  >
 										<label class="label-medium"><u>Products</u> <span class="badge"> Total : {{ allProducts.length }}</span></label>
 									</div>
-									<div class="col-sm-7">
+									<div class="col-sm-8">
 										<input type="search" placeholder="Search " ng-model="searchProductName">
 									</div>
 								</div>
-				
 								<div class="row xxx" ng-repeat= 'product in allProducts | filter : {productName: searchProductName}' >
 									<!-- formating row wise -->
-									<div class="row">
+					 				<div class="row">
 											<div class="col-sm-3 productImg">
 												<img src="images/logo1.png" width=120px height=70px > 
 											</div>
 											<div class="col-sm-9">
-												<label class="label-medium">{{ product.productName }}</label><br>
+												<label class="label-large">{{ product.productName }}</label><br>
 												<label class="label-small">{{ product.termYear }} Years plan for
 												&#8377; {{ product.monthlyPremium }}/month </label> <br>
-												<input class="btn btn-primary" type="button" value="Details"
+												<input class="btn btn-default" type="button" value="View details >>"
 														ng-click="viewProductDetails(product)">
-												
 											</div> 
 									</div>
-									<div class=row><hr color="red"></div>
+									<div class=row><hr></div>
 								</div>
 							</div>
-						</div>
-						<div class = "col-sm-3"></div>
 					</div>
+					<div class="col-sm-1"></div>
+					<div class = "col-sm-4 fixed-details" ng-show="productDetails">
+						<!--  Everything related to particular agent  -->
+						<div class = "row" align = "left">
+							<img src="images/logo1.png" width=200px height=120px > 
+						</div>
+						
+						<div class="row">
+							<label class="label-medium">Product Details</label>
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-1"></div>
+							<div class="col-sm-11">
+								<label>{{ detailProduct.productName }}</label>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-1">
+							</div>
+							<div class="col-sm-11">
+								<label>&#8377; {{ detailProduct.basicCoverage }}</label> Basic coverage
+							</div>
+						</div>
+						<div class="row">	
+							<div class="col-sm-2"></div>
+							<div class="col-sm-10">
+								
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-1">
+							</div>
+							<div class="col-sm-11">
+								<label> &#8377; {{ detailProduct.monthlyPremium }}</label>/month upto <label>{{ detailProduct.termYear }} </label>  Years
+							</div>
+						</div>
+						<div class="row">	
+							<div class="col-sm-2"></div>
+							<div class="col-sm-10">
+								
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-1">
+							</div>
+							<div class="col-sm-11">
+								<label>&#8377; {{ detailProduct.accidentalBenefit }}</label> Accidental benefit 
+							</div>
+						</div>
+						<div class="row">	
+							<div class="col-sm-2"></div>
+							<div class="col-sm-10">
+							
+							</div>
+						</div>
+						
+						<div class = "row">
+							<div class="col-sm-1">
+							</div>
+							<div class="col-sm-11">
+								<label>Settlement Ratio</label> 
+							</div>							
+						</div>
+						<div class="row">	
+							<div class="col-sm-2"></div>
+							<div class="col-sm-10">
+								{{ detailProduct.settlementRatio }} %
+							</div>
+						</div>
+						
+						<div class = "row">
+							<div class="col-sm-1">
+							</div>
+							<div class="col-sm-11">
+								<label>Details</label> 
+							</div>							
+						</div>
+						<div class="row">	
+							<div class="col-sm-2"></div>
+							<div class="col-sm-10" align="justify">
+								{{ detailProduct.description }}
+							</div>
+						</div>
+						<br>
+						<div class ="row" >
+							<input class="btn btn-default" type="button" 
+									value="<< Hide details" ng-click="hideProductDetails()">
+							<br><br>Tip: Register with us to BUY products					
+						</div> 
+					</div>
+				<div class="col-sm-2">
+				</div>
+			</div>					
 
 
 			<!--  displays agents only  -->
 				<div class = "row" ng-show="agentsDisplayDiv">
-					<div class = "col-sm-3"></div>
-					<div class = "col-sm-6 " > 	
+				  <br>
+					<div class = "col-sm-5 all-products-agents" > 	
 						<div class = "fade in"  >
 							<div class="row fade in">
-								<div class="col-sm-5">
+								<div class="col-sm-4">
 									<label class="label-medium"><u>Agents</u> <span class="badge"> Total : {{ allAgents.length }}</span></label>
 								</div>
-								<div class="col-sm-7">
+								<div class="col-sm-8">
 									<input type="search" placeholder="Search" ng-model="searchAgentUName">
 								</div>
 							</div>
@@ -113,46 +185,94 @@
 											<label class="label-medium">(Age : {{agent.age}}) </label> <br>
 											
 											<label class="label-small">Experience : {{ agent.workExperience }} Years </label> <br>
-											<label class="label-small">Occupation : {{ agent.present.Occupation }} </label> <br>
-											<input class="btn btn-primary" type="button" value="Details"
+											<label class="label-small">Occupation : {{ agent.presentOccupation }} </label> <br>
+											<input class="btn btn-default" type="button" value="View details >>"
 													ng-click="viewAgentDetails(agent)">	
 										</div> 
 									 
 								</div>
-								<div class=row><hr color="red"></div>
+								<div class=row><hr></div>
 							</div>
 						</div>
 					</div>
-					<div class = "col-sm-3"></div>
+					<div class="col-sm-1"></div>
+					<div class = "col-sm-4 fixed-details" ng-show="agentDetails">
+						<!--  Everything related to particular agent  -->
+						<div class = "row" align = "left">
+							<img src="images/profile.png" width=120px height=120px > 
+						</div>
+						
+						<div class="row">
+							<label class="label-medium">Personal Details</label>
+						</div>
+						<div class="row">
+							<div class="col-sm-1"></div>
+							<div class="col-sm-11">
+								<label>{{ detailAgent.userName }}</label> 
+								(Age : {{ detailAgent.age }})</label> <br>
+								{{ detailAgent.workExperience }}</label> years of experience
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-1">
+							</div>
+							<div class="col-sm-11">
+								{{ detailAgent.lastQualification }}</label> 
+							</div>
+						</div>	
+						<div class="row">
+								<label class="label-medium">Occupation</label>
+						</div>
+						<div class="row">
+							<div class="col-sm-1">
+							</div>
+							<div class="col-sm-11">
+								{{ detailAgent.presentOccupation }}</label> 
+							</div>
+						</div>
+						<div class="row">
+							<label class="label-medium">Rewards</label>
+						</div>
+						<div class="row">
+							<div class="col-sm-1">
+							</div>
+							<div class="col-sm-11">
+								{{ detailAgent.rewards }}</label> 
+							</div>
+						</div>
+						<div class = "row" >
+							<label class="label-medium">Contacts</label>
+						</div>
+						<div class = "row">
+							<div class="col-sm-1">
+							</div>
+							<div class="col-sm-11">
+								<label><span class="glyphicon glyphicon-earphone"></span></label>
+								<label>{{ detailAgent.phone }}</label> 
+							</div>							
+						</div>
+						
+						<div class = "row">
+							<div class="col-sm-1">
+							</div>
+							<div class="col-sm-11">
+								<label><span class="glyphicon glyphicon-envelope"></span></label>
+								<label>{{ detailAgent.email }}</label> 
+							</div>							
+						</div>
+						<br>
+						<div class ="row" >
+							<input class="btn btn-default" type="button" 
+									value="<< Hide details" ng-click="hideAgentDetails()">							
+						</div>
+					</div>
+					<div class="col-sm-2">
+					</div>
 				</div>
 	
+			<!-- details of agent -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			
 </div>
 <!-- FOOTER WILL COME FROM THE SHELL PAGE -->
+	

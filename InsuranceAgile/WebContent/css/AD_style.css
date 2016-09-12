@@ -12,20 +12,48 @@
 	margin: 5px;
 }
 
+.all-products-agents {
+     border: solid;
+     border-width: 2px;
+     border-color: #575258;
+}
+
+.fixed-details{
+/* 	background-color: grey; */
+	float :right;
+	display : inline-block;
+	position : fixed;
+	height: 70%;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #575258;
+    margin: 1em 0;
+    padding: 0; 
+}
+
 .common-function{
-	margin-left: -5px;
-	border-left: 1px solid;
-	border-left-color: grey;
+	margin-left: 0px;
+/* 	border-left: 1px solid #17202A; */
+/* 	border-right:1px solid #17202A; */
+	border-bottom : 1px solid #17202A;
+	color : white;
+	font-size: small;
+	margin-bottom: 10px;
+	margin-top : 10px;
 }
 
 
 label.headerlink{
-	  padding: 6px 0px; 
+	  padding: 15px 0px; 
 	  color	: white;
 	  margin-right : 20px;
 	  font-size: 14px;
 	  font-style: normal;
-	  font-size: small;
+	  font-size: larger;
 }
 
 span.headerlink{
@@ -37,14 +65,14 @@ span.headerlink{
 
 
 input[type=search] {
-  color	: white;
+  color	: black;
   width	: 30%;
   display: inline;
-  height: 34px;
+  height: 50px;
   padding: 6px 12px;
   font-size: 12px;
   color: #555;
-  background-color: #838185;
+  background-color: white;
   background-image: none;
   border-radius: 0px;
   border-right-color :#555;
@@ -55,9 +83,9 @@ input[type=search] {
 
 input[type=search]:focus {
     width: 70%;
-    color	: white;
+  	color: #555;
     border-width: 0px;
-    background-color: #838185;
+    background-color: white;
 }
 
 input[type=search]:hover {
@@ -69,11 +97,11 @@ input[type=search]:hover {
 
 .search-button{
   display: inline;
-  height: 34px;
+  height: 50px;
   padding: 6px 12px;
   font-size: 12px;
   color: #555;
-  background-color: #838185;
+  background-color: white;
   border-width : 0px;
   border-radius: 0px;
   border-left-color: #555;
@@ -81,18 +109,36 @@ input[type=search]:hover {
  }
 
 div .row .xxx:HOVER{
-	 background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+/* 	 background-color: rgba(0,0,0,0.7); Black w/ opacity */
+/* 	 background-color : #17202A; */
 	 color: white;
 }
 
-body {font-family: Verdana,sans-serif;}
 
-header{
+
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+    color: white;
+    background-color: black;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+    color: #0E92CA;
+}
+
+
+
+body {font-family: Verdana,sans-serif;
+background-color: #283747    ;
+color: white;
+font-size: 1.5em;
+}
+
+header {
 	padding-top:10px;
 	width:100%;
-	height : 55px;
+	height : 70px;
 	position: relative;
-	background-color: #4f5359;
+	background-color: #17202A;
 }
 
 footer{
@@ -103,8 +149,7 @@ footer{
 }
 
 .footerLinks{
-	color: #FFFFFF;
-	margin-left: 80px;
+	color: black;
 }
 
 .row{
@@ -113,10 +158,6 @@ footer{
 }
 
 
-
-/* For grid layout */
-
-/* For all class elements  */
 
 /* Nav bar starts here */
 
@@ -145,63 +186,6 @@ footer{
 
 .navigationBar .footerNav a:hover {background-color: #9E9E9E;}
  /* Nav bar ends here */
-
-
-
-/* Slider starts here */
-	.active {
-	  background-color: #717171;
-	}
-	/* Fading animation */
-	
-	.fade {
-	  -webkit-animation-name: fade;
-	  -webkit-animation-duration: 1.5s;
-	  animation-name: fade;
-	  animation-duration: 1.5s;
-	}
-	
-	@-webkit-keyframes fade {
-	  from {opacity: .4}
-	  to {opacity: 1}
-	}
-	
-	@keyframes fade {
-	  from {opacity: .4}
-	  to {opacity: 1}
-	}
-	
-	/* On smaller screens, decrease text size */
-	@media only screen and (max-width: 300px) {
-	  .text {font-size: 11px}
-	}
-
-/* Slider ends here */
-
-/* Tabs */
-
-/* Style the links inside the list items */
-
-
-
-/* Style the tab content */
-
-@-webkit-keyframes fadeEffect {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}
-
-@keyframes fadeEffect {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}
-/* Tabs */
-
-
-
-
-
-
 
 
 
@@ -277,19 +261,23 @@ footer{
 
 label.label-large{
 	font-size: x-large;
+	color: white;
 }
 
 label.label-medium{
 	font-size: large;
+	color: white;
 }
 
 label.label-small{
 	font-size: medium;
+	color: white;
 }
 
 a.anchor-big{
-	font-size: x-large;
+	font-size: 18px;
 	text-decoration: none;
+	color : white;
 }
 
 a.anchor-big:focus{
@@ -400,6 +388,11 @@ a.anchor-big:focus{
 
 .headings{
 	font-size: 30px;
+}
+
+.header-white {
+	color 		: white;
+/* 	font-size	: 1.5em;  */
 }
 
 .searchBox{
