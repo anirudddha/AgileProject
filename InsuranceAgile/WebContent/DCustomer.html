@@ -43,10 +43,11 @@
 		</div>
 
 	<!-- here is all the data to be displayed instead of the background image -->
-	<div ng-show="purchasePolicy">
+
+	<div ng-show="purchasePolicy" >
 			<div class="container-fluid">
 			    <h1 >Purchase Policy</h1>
-				<div class="col-lg-6 ">
+				<div class="col-lg-6 " style="border: 2px solid #26282b">
 					<form name="policyForm" >
 						<div class="row face in" >
 									<div class="row">
@@ -54,7 +55,7 @@
 											<label>Choose policy</label>
 											<select class="" ng-model="purchasePolicyName"	style="width:100%;" required >
 													<option >--Select policy--</option>
-													<option  ng-repeat="prod in allPolicies"> {{ prod.productName }}</option>
+													<option  ng-repeat="prod in allPolicies">{{ prod.productName }}</option>
 											</select>
 										</div>
 									</div>
@@ -80,13 +81,13 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-sm-8 form-group"> <br><br>
+										<div class="col-sm-8 form-group">
 											<label>* All Fields are mandatory</label>
 										</div>
 									</div>
 									<div class="row">	
 										<div class="col-sm-6 form-group"> 
-											<button type="button" class="btn btn-lg btn-info" ng-click="create_policy()" ng-disabled="policyForm.$invalid">Submit</button>
+											<button type="button" class="btn btn-lg btn-info" ng-click="buyPolicy()" ng-disabled="policyForm.$invalid">Buy policy</button>
 					
 										</div>					
 									</div>
@@ -103,7 +104,9 @@
 			<div class="col-sm-6 all-products-agents">
 				<div class = "fade in" >
 					<div class="row" >
-							<label class="label-medium"><u>My Policies</u> <span class="badge"> Total : {{ myPolicies.length }}</span></label> <br>
+							<label class="label-medium"><u>My Policies</u> 
+<!-- 								<span class="badge"> Total : {{ myPolicies.length }}</span> -->
+							</label> <br>
 							<input type="search" placeholder="Search " ng-model="searchPolicy.$">
 						<hr>
 					</div>
@@ -181,7 +184,9 @@
 			<div class="col-sm-6 all-products-agents">
 				<div class = "fade in" >
 					<div class="row" >
-							<label class="label-medium"><u>My Claims</u> <span class="badge"> Total : {{ myClaims.length }}</span></label><br>
+							<label class="label-medium"><u>My Claims</u> 
+<!-- 								<span class="badge"> Total : {{ myClaims.length }}</span> -->
+							</label><br>
 							<input type="search" placeholder="Search " ng-model="searchClaim.$">
 						<hr>
 					</div>
@@ -279,73 +284,77 @@
 	</div>
 	
 	
-	<div ng-show="totalPremium">
+	<div ng-show="totalPremium" style="border: 2px solid #26282b">
 		<br><br><br>
 		<div class="row">
-			<div class="col-sm-1"></div>
-			<div class="col-sm-11">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-6" style="align:center">
 				<label class="label-large"> Total Monthly Premium </label>
 			</div>
+			<div class="col-sm-3"></div>
 		</div>
 		<div class="row">
-			<div class="col-sm-2"></div>
-			<div class="col-sm-10">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-6" style="align:center;">
 				<label class="label-large"> &#8377; {{ totalMonthlyPremium }}</label>
 			</div>
+			<div class="col-sm-3"></div>
 		</div>
 	</div>
 	
-	
-	<div ng-show="submitClaimDiv">
+	<br>
+	<div ng-show="submitClaimDiv" >
 		<!-- Content Begins -->
+		
 			<div class="container">
 			
-			<h2 id="claim-form-link" class="text-info">Submit Claim</h2>
+			<h2 id="claim-form-link" >Submit Claim</h2>
 			<h3 ng-show="msg" class="text-danger">{{ msg }}</h3><br>
-			    <form id="claimForm" role="form" style="text-align: center;" name="claimForm" method="POST">
-			    <div style="float:left;">
-			      <div class="form-group" id="register-form">
-			        <input type="number" ng-model="claimAmount" class="form-control" class="control-label" placeholder="Claim Amount" name="claimAmt" min=10000 required>
-			        <p id="camt" class="text-danger" ng-show="claimForm.claimAmt.$touched && claimForm.claimAmt.$invalid">Min Claim Amount is 10000!</p>
-			      </div>
-			      <div class="form-group">
-			        <input type="text" ng-model="policyName" class="form-control" placeholder="Policy Name" name="policyName" required>
-			        <p id="pval1" class="text-danger" ng-show="claimForm.policyName.$touched && claimForm.policyName.$invalid">Policy Name is required!</p>
-			      </div>
-			
-			      <div class="form-group">
-			        <input type="text" ng-model="policyNumber" class="form-control" placeholder="Policy Number" name="policyNumber" required>
-			        <p id="pval" class="text-danger" ng-show="claimForm.policyNumber.$touched && claimForm.policyNumber.$invalid">Policy Number is required!</p>
-			      </div>
-			  
-			      <label>Claim Documents</label>
-			      <div class="form-group" style="text-align:left;">
-			      <div class="row" >
-			        <label class="checkbox-inline">
-			            <input type="checkbox" name="claimDocument" ng-model="claimDocument1" value="claim intimation form" required>Claim intimation Form**
-			        </label>
-			        </div>
-			         <div class="row">
-			        <label class="checkbox-inline">
-			            <input type="checkbox" name="claimDocument" ng-model="claimDocument2" value="copy of bank passbook and cheque"  required>Bank Passbook & Cancelled Cheque**
-			        </label>
-			        </div>
-			         <div class="row">
-			        <label class="checkbox-inline">
-			            <input type="checkbox" name="claimDocument" ng-model="claimDocument3" value=" address and id proof" required>Claimant ID & Address Proof**
-			        </label>
-			       </div>
-			     </div>
-			     <div class="form-group">
-			        <div class="row">
-			          <div class="">
-			            <input type="submit" name="claim-submit" id="claim-submit" ng-disabled="claimForm.$invalid"class="form-control btn btn-info" value="Submit"
-			            ng-click="claimSubmit()">
-			          </div>
-			        </div>
-			      </div>
-			      </div>
-			     
+			    <form id="claimForm" role="form" style="text-align: center;" name="claimForm" method="POST" >
+			    
+					    <div style="float:left; border: 2px solid #26282b" class="col-md-6" >
+					      <div class="form-group" id="register-form">
+					        <input type="number" ng-model="claimAmount" class="form-control" class="control-label" placeholder="Claim Amount" name="claimAmt" min=10000 required>
+					        <p id="camt" class="text-danger" ng-show="claimForm.claimAmt.$touched && claimForm.claimAmt.$invalid">Min Claim Amount is 10000!</p>
+					      </div>
+					      <div class="form-group">
+					        <input type="text" ng-model="policyName" class="form-control" placeholder="Policy Name" name="policyName" required>
+					        <p id="pval1" class="text-danger" ng-show="claimForm.policyName.$touched && claimForm.policyName.$invalid">Policy Name is required!</p>
+					      </div>
+					
+					      <div class="form-group">
+					        <input type="text" ng-model="policyNumber" class="form-control" placeholder="Policy Number" name="policyNumber" required>
+					        <p id="pval" class="text-danger" ng-show="claimForm.policyNumber.$touched && claimForm.policyNumber.$invalid">Policy Number is required!</p>
+					      </div>
+					  
+					      <label>Claim Documents</label>
+					      <div class="form-group" style="text-align:left;">
+					      <div class="row" >
+					        <label class="checkbox-inline">
+					            <input type="checkbox" name="claimDocument" ng-model="claimDocument1" value="claim intimation form" required>Claim intimation Form**
+					        </label>
+					        </div>
+					         <div class="row">
+					        <label class="checkbox-inline">
+					            <input type="checkbox" name="claimDocument" ng-model="claimDocument2" value="copy of bank passbook and cheque"  required>Bank Passbook & Cancelled Cheque**
+					        </label>
+					        </div>
+					         <div class="row">
+					        <label class="checkbox-inline">
+					            <input type="checkbox" name="claimDocument" ng-model="claimDocument3" value=" address and id proof" required>Claimant ID & Address Proof**
+					        </label>
+					       </div>
+					     </div>
+					     <div class="form-group">
+					        <div class="row">
+					          <div class="">
+					            <input type="submit" name="claim-submit" id="claim-submit" ng-disabled="claimForm.$invalid"class="form-control btn btn-info" value="Submit Claim"
+					            ng-click="claimSubmit()">
+					          </div>
+					        </div>
+					      </div>
+					      </div>
+					     
 			    
 			      
 			    </form>
@@ -363,7 +372,9 @@
 				<div class = "fade in" >
 					<div class="row" >
 						<div class="col-sm-4"  >
-							<label class="label-medium"><u>Products</u> <span class="badge"> Total : {{ allProducts.length }}</span></label>
+							<label class="label-medium"><u>Products</u> 
+<!-- 								<span class="badge"> Total : {{ allProducts.length }}</span> -->
+							</label>
 						</div>
 						<div class="col-sm-8">
 							<input type="search" placeholder="Search " ng-model="searchProductName">
@@ -391,7 +402,7 @@
 			<div class = "col-sm-4 fixed-details" ng-show="productDetails">
 				<!--  Everything related to particular agent  -->
 				<div class = "row" align = "left">
-					<img src="images/logo1.png" width=200px height=120px > 
+<!-- 					<img src="images/logo1.png" width=200px height=120px >  -->
 				</div>
 				<div class="row">
 					<label class="label-medium">Product Details</label>
@@ -462,8 +473,8 @@
 				<div class ="row" >
 					<input class="btn btn-default" type="button" 
 						value="<< Hide details" ng-click="hideProductDetails()">
-						<br><br>Buy product <br>
-						should redirect to purchase policy and 					
+<!-- 						<br><br>Buy product <br> -->
+<!-- 						should redirect to purchase policy and 					 -->
 				</div> 
 			</div>
 			<div class="col-sm-1"></div>
@@ -477,7 +488,9 @@
 						<div class = "fade in"  >
 							<div class="row fade in">
 								<div class="col-sm-4">
-									<label class="label-medium"><u>Agents</u> <span class="badge"> Total : {{ allAgents.length }}</span></label>
+									<label class="label-medium"><u>Agents</u> 
+<!-- 										<span class="badge"> Total : {{ allAgents.length }}</span> -->
+									</label>
 								</div>
 								<div class="col-sm-8">
 									<input type="search" placeholder="Search" ng-model="searchAgentUName">
@@ -583,7 +596,24 @@
 	
 	
 	
-	
+						<div id="myAlertDialog" class = "modal fade">
+							<div class="col-sm-3"></div>
+							<div class="col-sm-6">
+							
+									<form class="modal-content animate" name="registerForm">	
+										<div class="row">
+											<label class="label-large"> {{ header }} </label>
+											<hr style="margin-top:0px; margin-bottom:0px;">
+										</div>
+										
+										<div class="row">
+											<label>{{ message }}</label>
+											<br><br> 
+										</div>
+									</form>
+							</div>
+							<div class="col-sm-3"></div>
+						</div>
 
 
 </div>

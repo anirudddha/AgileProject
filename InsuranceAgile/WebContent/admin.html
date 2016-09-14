@@ -1,0 +1,391 @@
+<div id="mySidenav" class="sidenav">
+		<img src = "images/nothumb.png" height=12.5% width=50%>
+		<div align="center"> Welcome {{ uname }}</div> 
+		<hr color = "black">
+		
+		
+<!-- 		<a href="#/admin" >ad</a>  -->
+		
+
+		<br><br>
+		
+		<a href="#/admin "ng-click="getPendingagents()" > Pending Agents </a>
+		<a href="#/admin" ng-click="getPendingClaims()"> Pending Claims </a>
+		<a href="#/admin" ng-click="getPendingpolicy()"> Pending Policies </a>
+		<br><br>
+
+		<br><br><br>
+		<hr color = "black">
+		<div class="logout" align="center" ng-click="logout()"> <span class="logout">Logout</span></div> 
+</div>
+
+<div class="userContents">
+
+	<div class = "row header-white" >
+				<div class = "col-sm-2 common-function" align="center">
+					<a href="#/admin" class="anchor-big" ng-click="gotoHome()"> <span class="glyphicon glyphicon-home" > </span> Home</a>		
+				</div>
+				<div class = "col-sm-2 common-function" align="center">
+					<a href="#/admin" class="anchor-big" ng-click="getAllProducts()"> <span class = "glyphicon" >  </span> Products </a> 
+				</div>
+				<div class = "col-sm-2 common-function" align="center">
+					<a href="#/admin" class="anchor-big" ng-click="getAllAgents()"> <span class = "glyphicon" >  </span> Agents </a> 
+				</div>
+				<div class = "col-sm-2 common-function" align ="center">
+					<a href="#/admin" class="anchor-big" > <span class = "glyphicon" >  </span>  </a> 
+				</div>
+				<div class = "col-sm-2 common-function" align="center">
+					<a href="#/admin" class="anchor-big" > <span class = "glyphicon" > </span>  </a> 
+				</div>	
+				<div class = "col-sm-2 common-function" align="center">
+					<a href="#/admin" class="anchor-big" > <span class = "glyphicon" > </span>  </a> 			
+				</div>  
+	</div>
+
+	<!-- here is all the data to be displayed instead of the background image -->
+	
+	
+	<div ng-show="pendingPoliciesDiv">
+		<div>
+			<div class="row">
+				<div class="col-md-12">
+			   		<div class="table-responsive">
+			        <h3>Pending policy requests</h3>
+			        <table id="mytable" class="table table-bordred table-striped" >
+			        	<thead>
+							<th><b>Username</b></th>
+							<th><b>Policy Name</b></th>
+							<th><b>Policy Number</b></th>
+							<th><b>Monthly Premium</b></th>
+							<th><b>Annual Income</b></th>
+							<th><b>Employment</b></th>
+							<th><b>Actions</b></th>
+							
+			            </thead>
+						
+			    		<tr ng-repeat="user in pendingPolicies">
+			    		
+			    			 <td>{{user.userName}}</td>
+			    			 <td>{{user.policyName}}</td>
+			    			 <td>{{user.policyNumber}}</td>
+			    			 <td>&#8377; {{user.monthlyPremium}}</td>
+			    			 <td>&#8377; {{user.annualIncome}}</td>
+			    			 <td>{{user.employment}}</td>
+			    			 <td><button type="button" class="btn btn-success btn-cons" ng-click="approvepolicyStatus(user.policyNumber)"">Approve</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger btn-cons"ng-click="rejectpolicyStatus(user.policyNumber)">Reject</button></td>
+			    		</tr>
+					</table>
+							</div>
+						</div>
+					</div>
+			</div>
+	</div>
+
+	
+	<div ng-show="pendingClaimsDiv">
+		<div>
+			<div class="row">
+				<div class="col-md-12">
+			        <div class="table-responsive">
+			        	<h3>Pending claim requests</h3>
+				        <table id="mytable" class="table table-bordred table-striped" >
+					        <thead>
+					        		<th><b>Date of Claim</b></th>
+					        		<th><b>Policy Number</b></th>
+									<th><b>Claim Amount</b></th>
+									<th><b>Approved Amount</b></th>
+									<th><b>Claim Type</b></th>
+									<th><b>Action</b></th>
+									
+					            </thead>
+								
+					    		<tr ng-repeat="pClaim in pendingClaims">
+					    			<td>{{pClaim.dateOfClaim | date: 'dd-MMM-yyyy'}}</td>
+					    			<td>{{pClaim.policyNumber}}</td>
+					    			<td>&#8377; {{pClaim.claimAmount}}</td>
+					    			<td>&#8377; {{pClaim.aprrovedClaimAmount}}</td>
+					    			<td>{{pClaim.claimType}}</td>
+					    			<td><button type="button" class="btn btn-success btn-cons" ng-click="approveClaimStatus(pClaim.id)"">Approve</button>&nbsp;&nbsp;&nbsp;
+					    			<button type="button" class="btn btn-danger btn-cons"ng-click="rejectClaimStatus(pClaim.id)">Reject</button></td>
+					    		</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+	</div>
+	
+	
+	<div ng-show="pendingAgentsDiv">
+		<div >
+			<div class="row">
+				<div class="col-md-12">
+			        <div class="table-responsive">
+			        	<h3>Pending Agent requests</h3>
+				        <table id="mytable" class="table table-bordred table-striped" >
+					        <thead>
+					        		<th><b>Username</b></th>
+					        		<th><b>Age</b></th>
+									<th><b>Qualification</b></th>
+									<th><b>Occupation</b></th>
+									<th><b>Experience</b></th>
+									<th><b>Rewards</b></th>
+									<th><b><span class="glyphicon glyphicon-envelope"></span> Email</b></th>
+									<th><b><span class="glyphicon glyphicon-earphone"></span> Contact</b></th>
+									<th><b>Actions</b></th>
+									
+					            </thead>
+								
+					    		<tr ng-repeat=" pAgent in pendingAgents">
+					    			<td>{{pAgent.userName}}</td>
+					    			<td>{{pAgent.age}}</td>
+					    			<td>{{pAgent.lastQualification}}</td>
+					    			<td>{{pAgent.presentOccupation}}</td>
+					    			<td>{{pAgent.workExperience}}</td>
+					    			<td>{{pAgent.rewards}}</td>
+					    			<td>{{pAgent.email}}</td>
+					    			<td>{{pAgent.phone}}</td>
+					    			<td><button type="button" class="btn btn-success btn-cons" ng-click="approveagentStatus(pAgent.userName)">Approve</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger btn-cons"ng-click="rejectClaimStatus(user.id)">Reject</button></td>
+					    		</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+	</div>	
+			
+			
+			
+	<!--  displays products only  -->
+	<div class = "row" ng-show="productsDisplayDiv" >
+			<br>
+			<div class="col-sm-6 all-products-agents">
+				<div class = "fade in" >
+					<div class="row" >
+						<div class="col-sm-4"  >
+							<label class="label-medium"><u>Products</u>
+<!-- 								<span class="badge"> Total : {{ allProducts.length }}</span> -->
+							</label>
+						</div>
+						<div class="col-sm-8">
+							<input type="search" placeholder="Search " ng-model="searchProductName">
+						</div>
+					</div>
+					<div class="row xxx" ng-repeat= 'product in allProducts | filter : {productName: searchProductName}' >
+					<!-- formating row wise -->
+						<div class="row">
+							<div class="col-sm-3 productImg">
+								<img src="images/logo1.png" width=120px height=70px > 
+							</div>
+							<div class="col-sm-9">
+								<label class="label-large">{{ product.productName }}</label><br>
+								<label class="label-small">{{ product.termYear }} Years plan for
+								&#8377; {{ product.monthlyPremium }}/month </label> <br>
+								<input class="btn btn-default" type="button" value="View details >>"
+										ng-click="viewProductDetails(product)">
+							</div> 
+						</div>
+						<div class=row><hr></div>
+						</div>
+				</div>
+			</div>
+			<div class="col-sm-1"></div>
+			<div class = "col-sm-4 fixed-details" ng-show="productDetails">
+				<!--  Everything related to particular agent  -->
+				<div class = "row" align = "left">
+<!-- 					<img src="images/logo1.png" width=200px height=120px >  -->
+				</div>
+				<div class="row">
+					<label class="label-medium">Product Details</label>
+				</div>
+				<div class="row">
+					<div class="col-sm-1"></div>
+					<div class="col-sm-11">
+						<label>{{ detailProduct.productName }}</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-1"></div>
+					<div class="col-sm-11">
+						<label>&#8377; {{ detailProduct.basicCoverage }}</label> Basic coverage
+					</div>
+				</div>
+				<div class="row">	
+					<div class="col-sm-2"></div>
+					<div class="col-sm-10">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-1"></div>
+					<div class="col-sm-11">
+						<label> &#8377; {{ detailProduct.monthlyPremium }}</label>/month upto <label>{{ detailProduct.termYear }} </label>  Years
+					</div>
+				</div>
+				<div class="row">	
+					<div class="col-sm-2"></div>
+					<div class="col-sm-10"></div>
+				</div>
+				<div class="row">
+					<div class="col-sm-1"></div>
+					
+					<div class="col-sm-11">
+						<label>&#8377; {{ detailProduct.accidentalBenefit }}</label> Accidental benefit 
+					</div>
+				</div>
+				<div class="row">	
+					<div class="col-sm-2"></div>
+					<div class="col-sm-10"></div>
+				</div>
+				<div class = "row">
+					<div class="col-sm-1"></div>
+					<div class="col-sm-11">
+						<label>Settlement Ratio</label> 
+					</div>							
+				</div>
+				<div class="row">	
+					<div class="col-sm-2"></div>
+					<div class="col-sm-10">
+						{{ detailProduct.settlementRatio }} %
+					</div>
+				</div>
+				<div class = "row">
+					<div class="col-sm-1"></div>
+					<div class="col-sm-11">
+						<label>Details</label> 
+					</div>							
+				</div>
+				<div class="row">	
+					<div class="col-sm-2"></div>
+					<div class="col-sm-10" align="justify">
+						{{ detailProduct.description }}
+					</div>
+				</div>
+				<br>
+				<div class ="row" >
+					<input class="btn btn-default" type="button" 
+						value="<< Hide details" ng-click="hideProductDetails()">
+<!-- 						<br><br>Buy product <br> -->
+<!-- 						should redirect to purchase policy and 					 -->
+				</div> 
+			</div>
+			<div class="col-sm-1"></div>
+	</div>					
+
+
+	<!--  displays agents only  -->
+	<div class = "row face in" ng-show="agentsDisplayDiv">
+				  <br>
+					<div class = "col-sm-6 all-products-agents" > 	
+						<div class = "fade in"  >
+							<div class="row fade in">
+								<div class="col-sm-4">
+									<label class="label-medium">
+<!-- 										<u>Agents</u> <span class="badge"> Total : {{ allAgents.length }}</span> -->
+									</label>
+								</div>
+								<div class="col-sm-8">
+									<input type="search" placeholder="Search" ng-model="searchAgentUName">
+								</div>
+							</div>
+			
+							<div class="row xxx" ng-repeat= "agent in allAgents | filter : {userName: searchAgentUName} | orderBy : 'userName' " >
+								<!-- formating row wise -->
+								<div class="row fade in">
+										<div class="col-sm-3 productImg">
+											<img src="images/profile.png" width=120px height=120px > 
+										</div>
+										<div class="col-sm-9">
+											<label class="label-large">{{ agent.userName }} </label> 
+											<label class="label-medium">(Age : {{agent.age}}) </label> <br>
+											
+											<label class="label-small">Experience : {{ agent.workExperience }} Years </label> <br>
+											<label class="label-small">Occupation : {{ agent.presentOccupation }} </label> <br>
+											<input class="btn btn-default" type="button" value="View details >>"
+													ng-click="viewAgentDetails(agent)">	
+										</div> 
+									 
+								</div>
+								<div class=row><hr></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-1"></div>
+					<div class = "col-sm-4 fixed-details" ng-show="agentDetails">
+						<!--  Everything related to particular agent  -->
+						<div class = "row" align = "left">
+							<img src="images/profile.png" width=120px height=120px > 
+						</div>
+						
+						<div class="row">
+							<label class="label-medium">Personal Details</label>
+						</div>
+						<div class="row">
+							<div class="col-sm-1"></div>
+							<div class="col-sm-11">
+								<label>{{ detailAgent.userName }}</label> 
+								(Age : {{ detailAgent.age }})</label> <br>
+								{{ detailAgent.workExperience }}</label> years of experience
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-1">
+							</div>
+							<div class="col-sm-11">
+								{{ detailAgent.lastQualification }}</label> 
+							</div>
+						</div>	
+						<div class="row">
+								<label class="label-medium">Occupation</label>
+						</div>
+						<div class="row">
+							<div class="col-sm-1">
+							</div>
+							<div class="col-sm-11">
+								{{ detailAgent.presentOccupation }}</label> 
+							</div>
+						</div>
+						<div class="row">
+							<label class="label-medium">Rewards</label>
+						</div>
+						<div class="row">
+							<div class="col-sm-1">
+							</div>
+							<div class="col-sm-11">
+								{{ detailAgent.rewards }}</label> 
+							</div>
+						</div>
+						<div class = "row" >
+							<label class="label-medium">Contacts</label>
+						</div>
+						<div class = "row">
+							<div class="col-sm-1">
+							</div>
+							<div class="col-sm-11">
+								<label><span class="glyphicon glyphicon-earphone"></span></label>
+								<label>{{ detailAgent.phone }}</label> 
+							</div>							
+						</div>
+						
+						<div class = "row">
+							<div class="col-sm-1">
+							</div>
+							<div class="col-sm-11">
+								<label><span class="glyphicon glyphicon-envelope"></span></label>
+								<label>{{ detailAgent.email }}</label> 
+							</div>							
+						</div>
+						<br>
+						<div class ="row" >
+							<input class="btn btn-default" type="button" 
+									value="<< Hide details" ng-click="hideAgentDetails()">							
+						</div>
+					</div>
+					<div class="col-sm-1">
+					</div>
+				</div>
+				
+				
+</div>

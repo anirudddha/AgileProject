@@ -18,82 +18,10 @@ myMod.directive('ngNav', function() {
 
 
 // Arushi's code starts here'
-		myMod.service('iService', function($http,$cookieStore, $location){
-		var userType;
-		
-		this.setUserType=function(type,$rootScope,$scope)
-		    {
-		    	$cookieStore.put('userType',type);
-		    };
-		
-			
-			//return factobj;
-		
-			this.login = function (uname, pass, $http, $scope) 
-			{
-			
-		   
-				$http({
-						method : 'GET',
-							url : 'http://10.20.14.83:9002/imservices/login?userName='+uname+'&password='+pass,
-						headers : {
-									'Content-Type' : 'application/json',
-									'Access-Control-Allow-Origin': 'http://10.20.14.83:9002',
-				
-												}
-					}).then(function successCallback(response) {
-						var data = response.data;
-						if(response.data.id!=null)
-							{
-							
-								console.log("The USERID is"+data.id);
-//								alert('successful login usertype '+$cookieStore.get("userType"));
-								$scope.userType=$cookieStore.get("userType");
-								$cookieStore.put('auth-token',response.data['id']);
-			                    $cookieStore.put('uname',response.data.userName);
-								$scope.luname = "";
-								$scope.lpass = "";
-//								if($scope.userType == "AGENT"){									
-//									$location.path('/agent/'+$cookieStore.get("uname")+"/"+$cookieStore.get("userType")+"/"+$cookieStore.get("auth-token"));
-//									console.log("/agent/"+$cookieStore.get("uname")+"/"+$cookieStore.get("userType")+"/"+$cookieStore.get("auth-token"));
-//								}
-//								else 
-			                    if($scope.userType == 'DIRECT CUSTOMER'){
-									$scope.closeModal('loginUser');
-									$location.path('/DCustomer');
-									
-									//console.log("/DCustomer/"+$cookieStore.get("uname"))
-								}
-//								else{
-//									$location.path('/mCustomer/'+$cookieStore.get("uname"));
-//									console.log("/mCustomer/"+$cookieStore.get("uname"))
-//								}
-				                    
-							}
-						else
-							{
-							//alert('invalid username and password!!!');
-								$scope.passwordErr = "invalid username or password!!!";
-								return;
-							}
-						
-			        }, function errorCallback(response) {
-			        		$cookieStore.put('uname',null);
-			        		$cookieStore.put('uType',null);
-			        		alert("Server Error. Try After Some time: " + response);
 	
-				});
+var controllers = {};
 		
-			}
-		});
-
-		
-		
-		var controllers = {};
-		
-		
-		
-var IController = function($scope,$rootScope,$http,$cookieStore,iService, $location) {
+var IController = function($scope,$rootScope,$http,$cookieStore, $location) {
 			
 			$scope.userExists = false;
 			
@@ -119,7 +47,7 @@ var IController = function($scope,$rootScope,$http,$cookieStore,iService, $locat
 				if($cookieStore.get('auth-token')!=null && $cookieStore.get('userType')=="ADMIN")
 				{
 					// go to Agent
-					$location.path('/Admin');
+					$location.path('/admin');
 				}
 			
 			}
@@ -127,49 +55,70 @@ var IController = function($scope,$rootScope,$http,$cookieStore,iService, $locat
 			$scope.ifLoggedIn();
 
 			
-			$scope.openModal = function(modalName, uType){
-						$cookieStore.put('userType', uType);
-						if (uType != 'null'){
-							$scope.userType = $cookieStore.get('userType');
-						}
-						$('#' + modalName).modal('show');
-					}
-					
-			$scope.closeModal = function(modalName){
-						if(modalName=="loginUser"){
-								$scope.luname="";
-								$scope.lpass="";
-							}
-						if(modalName=="loginAgent"){
-							$scope.luname="";
-							$scope.lpass="";
-						}
-						if(modalName=="registerUser"){
-							$scope.fname="";
-							$scope.lname="";
-							$scope.address="";
-							$scope.city="";
-							$scope.contact="";
-							$scope.email="";
-							$scope.uname="";
-							$scope.psw="";
-							$scope.cpsw="";
-							
-						}
-						if(modalName=="registerAgent"){
-							$scope.age="";
-							$scope.qualification="";
-							$scope.occupation="";
-							$scope.rewards="";
-							$scope.experience="";
-							$scope.status="";
-							
-						}
-						$('#' + modalName).modal('hide');
+			$scope.openModal = function(modalName){
+//				$cookieStore.put('userType', uType);
+//				if (uType != 'null'){
+//					$scope.userType = $cookieStore.get('userType');
+//				}
+				$('#' + modalName).modal('show');
+//				document.getElementById("lusername").focus();
 			}
 					
-								
+			$scope.closeModal = function(modalName){
+				if(modalName=="loginUser"){
+					$scope.luname="";
+					$scope.lpass="";
+				}
+				if(modalName=="loginAgent"){
+					$scope.luname="";
+					$scope.lpass="";
+				}
+				if(modalName=="registerUser"){
+					$scope.fname="";
+					$scope.lname="";
+					$scope.address="";
+					$scope.city="";
+					$scope.contact="";
+					$scope.email="";
+					$scope.uname="";
+					$scope.psw="";
+					$scope.cpsw="";
+				}
+				if(modalName=="registerAgent"){
+					$scope.age="";
+					$scope.qualification="";
+					$scope.occupation="";
+					$scope.rewards="";
+					$scope.experience="";
+					$scope.status="";
+							
+				}
+				$('#' + modalName).modal('hide');
+			}
 					
+			$( "#lusername" )
+			  .focusout(function() {
+				$scope.unameErr = "";
+				$scope.passwordErr = "";
+					
+					if($scope.luname == null){
+						$scope.unameErr = "Enter username";
+						return;
+					}
+					
+					if($scope.luname.length == 0){
+						$scope.unameErr = "Enter username";
+						return;
+					}
+					
+					
+			  })				
+			$scope.lunameChange = function(){
+//				if($scope.luname.length > 0){
+//					$scope.unameErr = "";
+//				}
+			}
+			
 			$scope.login_user = function(){
 						$scope.unameErr = "";
 						$scope.passwordErr = "";
@@ -182,14 +131,68 @@ var IController = function($scope,$rootScope,$http,$cookieStore,iService, $locat
 						if($scope.lpass.length == 0){
 							$scope.passwordErr = "Enter password";
 							return;
-						}
-						
-						$rootScope.isLogged =iService.login($scope.luname ,$scope.lpass , $http, $scope);
-						$scope.closeModal('loginUser');
+						}								
+									// check if account is present or not
+									$http({
+										method : 'GET',
+											url : 'http://10.20.14.83:9002/imservices/login?userName='+$scope.luname+'&password='+$scope.lpass,
+										headers : {
+													'Content-Type' : 'application/json',
+													'Access-Control-Allow-Origin': 'http://10.20.14.83:9002'
+												}
+									})
+									.then(function successCallback(response) {
+										var data = response.data;
+										if(response.data.id!=null)
+											{
+												console.log("The USERID is " + data.id);												
+												
+		//										if($scope.userType == "AGENT"){									
+		//											$location.path('/agent/'+$cookieStore.get("uname")+"/"+$cookieStore.get("userType")+"/"+$cookieStore.get("auth-token"));
+		//											console.log("/agent/"+$cookieStore.get("uname")+"/"+$cookieStore.get("userType")+"/"+$cookieStore.get("auth-token"));
+		//										}
+		//										else
+												if ( data.userName == "admin"){
+														$scope.userType = "ADMIN";
+														$cookieStore.put('auth-token', response.data['id']);
+									                    $cookieStore.put('uname', response.data.userName);
+									                    $cookieStore.put('userType', "ADMIN");
+									                    $scope.closeModal('loginUser');
+														$location.path('/admin');
+														}
+												else
+													{
+														$scope.userType = "DIRECT CUSTOMER";
+														$cookieStore.put('auth-token',response.data['id']);
+														console.log(response.data['id']);
+									                    $cookieStore.put('uname',response.data.userName);
+									                    $cookieStore.put('userType', "DIRECT CUSTOMER");
+									                    $scope.closeModal('loginUser');
+														$location.path('/DCustomer');
+													}
+		//										else{
+		//											$location.path('/mCustomer/'+$cookieStore.get("uname"));
+		//											console.log("/mCustomer/"+$cookieStore.get("uname"))
+		//										}
+											}
+										else
+											{
+											//alert('invalid username and password!!!');
+												$scope.passwordErr = "invalid username or password!!!";
+												//return;
+											}
+										
+							        }, function errorCallback(response) {
+							        		$cookieStore.put('uname',null);
+							        		$cookieStore.put('userType',null);
+							        		alert("Server Error. Try After Some time: " + response);
+								});
+
+//						$scope.closeModal('loginUser');
 				    }
 					
-					$scope.loginUnameToUpper = function(){
-						$scope.loginUname = $scope.loginUname.toUpperCase();
+					$scope.lunameToUpper = function(){
+						$scope.luname = $scope.luname.toUpperCase();
 					}
 					
 					$scope.firstnameToUpper = function(){
@@ -598,38 +601,7 @@ var IController = function($scope,$rootScope,$http,$cookieStore,iService, $locat
 		//agent registration ends here
 			
 		//=================================create ploicy====================================
-		$scope.create_policy=function(){
-			$http({
-				
-				method	:	'POST',
-				url		:	serverAddr + '/imservices/policy',
-				header	:	
-					{
-						'Content-Type' : 'application/json',
-						'Access-Control-Allow-Origin' :	serverAddr
-					},
-				data : 
-					{
-						userName	:	$scope.username,
-						productName	:	$scope.products,
-						annualIncome		:	$scope.annualincome,
-						incomeProofFile		:	$scope.incomeproof,
-						residenceProofFile		:	$scope.residenceproof,
-						ageProofFile	:	$scope.ageproof,
-						photoFile		:	$scope.photo,
-						employment	:	$scope.employment
-					}
-			}).then(function successCallback(response){
-				alert ("You have purchased policy successfully!!");		
-				// NOW REDIRECT TO LOGIN PAGE
-			}, 
-			
-			function errorCallback(response){
-					alert("Error : \n" + response.data);	
-			});
-		}
-		
-		
+
 		$scope.homepageBGImage = true;
 		$scope.allProducts = [];
 		$scope.allAgents   = [];
@@ -738,6 +710,7 @@ var IController = function($scope,$rootScope,$http,$cookieStore,iService, $locat
 				$scope.agentDetails = false;
 				$scope.productDetails = false;
 			}
+			
 };
 				
 				
@@ -749,8 +722,6 @@ var IController = function($scope,$rootScope,$http,$cookieStore,iService, $locat
 
 var dCustomerController = function($scope, $rootScope, $http, $cookieStore, $location) {
 	console.log("Reached dCustomerController");
-	
-	
 	
 	//check if userIsLoggedIn
 	$scope.ifLoggedIn = function(){
@@ -778,14 +749,13 @@ var dCustomerController = function($scope, $rootScope, $http, $cookieStore, $loc
 		if($cookieStore.get('auth-token')!=null && $cookieStore.get('userType')=="ADMIN")
 		{
 			// go to Agent
-			$location.path('/Admin');
+			$location.path('/admin');
 		}
-		
-		
-	
 	}
 	$scope.ifLoggedIn();
 
+	
+	
 	$scope.getAllPolicies = function(){
 		  $http({
 				method : 'GET',
@@ -819,6 +789,7 @@ var dCustomerController = function($scope, $rootScope, $http, $cookieStore, $loc
 					}
 				
 				policyDocuments=$scope.policyDocument1+$scope.policyDocument2+$scope.policyDocument3;
+				
 				$http({
 					
 					method	:	'POST',
@@ -828,22 +799,26 @@ var dCustomerController = function($scope, $rootScope, $http, $cookieStore, $loc
 							'Content-Type' : 'application/json',
 							'Access-Control-Allow-Origin' :	serverAddr,
 						    '_id': $cookieStore.get('auth-token') 
-							
 						},
 					
 					data : 
-						{ 	
+						{
 							userName			:	$scope.uname,
 							productName			:	$scope.purchasePolicyName,
 							annualIncome		:	$scope.purchasePolicyAnnualIncome,
 							employement			:	$scope.purchasePolicyEmployment
 						}
 						
-				}).then(function successCallback(response){
+				})
+				
+				.then(function successCallback(response){
 					var data=response.data;
+					console.log(data);
 					
-					if(response.data.id!=null){
-						//alert ("Your policy is created. Wait for its appoval. We will contact soon!");		
+					if(data.id!=null){
+						//alert ("Your policy is created. Wait for its appoval. We will contact soon!");
+						$scope.showMyAlertDialog("Success!", "Policy purchased.");
+						//empty the fields
 					}
 					else{
 						alert("you have entered invalid data!!");
@@ -965,8 +940,8 @@ var dCustomerController = function($scope, $rootScope, $http, $cookieStore, $loc
 	   
 			    	  	if((response.data.id!= null)) {
 	    
-			    	  		alert("successfully submitted");
-	     
+			    	  		//alert("successfully submitted");
+			    	  		$scope.showMyAlertDialog("Sucess!", "Claim submitted.");
 	    
 			    	  	} 
 	   
@@ -1074,13 +1049,358 @@ var dCustomerController = function($scope, $rootScope, $http, $cookieStore, $loc
 		$cookieStore.put('uname', null);
 		$location.path('/');
 	}
+	
+	
+	$scope.showMyAlertDialog = function (hdr, msg){
+		$scope.header = hdr;
+		$scope.message = msg;
+		
+		$('#myAlertDialog').modal('show');
+		$(function() {
+		    setTimeout(function() {
+		        $("#myAlertDialog").modal('hide')
+		    }, 2500);
+		});
+	}
 };
-
 
 //Aniruddha's code ends here
 
+
+
+var adminController = function($scope, $rootScope, $http, $cookieStore, $location){
+	console.log("reached in adminController");
+	$scope.ifLoggedIn = function(){
+		
+		if($cookieStore.get('auth-token')==null )
+			{
+				$location.path('/');
+			}
+		if($cookieStore.get('auth-token')!=null && $cookieStore.get('userType')=="DIRECT CUSTOMER")
+			{
+				$scope.auth_token = $cookieStore.get('auth-token');
+				$scope.uname = $cookieStore.get('uname');
+				$scope.userType = $cookieStore.get('userType');
+			}
+		if($cookieStore.get('auth-token')!=null && $cookieStore.get('userType')=="AGENT")
+			{
+				// go to Agent
+				$location.path('/Agent');
+			}
+		if($cookieStore.get('auth-token')!=null && $cookieStore.get('userType')=="MANAGED CUSTOMER")
+		{
+			// go to Agent
+			$location.path('/MCustomer');
+		}
+		if($cookieStore.get('auth-token')!=null && $cookieStore.get('userType')=="ADMIN")
+		{
+			// go to Agent
+			$scope.auth_token = $cookieStore.get('auth-token');
+			$scope.uname = $cookieStore.get('uname');
+			$scope.userType = $cookieStore.get('userType');
+			$location.path('/admin');
+		}
+	}
+	$scope.ifLoggedIn();
+	
+	
+	
+	// admin sidenavbar functionalities
+
+	$scope.getPendingpolicy = function(){
+		$http({
+	        method : 'GET',
+	        url : 'http://10.20.14.83:9002//imservices/policy/pending',
+	        headers : {
+	              'Content-Type' : 'application/json',
+	              'Access-Control-Allow-Origin': serverAddr
+	        }}).then(function successCallback(response) {
+	        	$scope.pendingPolicies = response.data;
+	        	$scope.hideAllDivs();
+	        	$scope.pendingPoliciesDiv = true;
+	        });             
+	};
+	
+	$scope.approvepolicyStatus=function(no){
+		  
+		console.log(no);
+		  
+		        var claimstatus="approved";
+		        
+		    $http({
+		        'method': 'PUT',
+		        url:'http://10.20.14.83:9002/imservices/policy?policyNumber=' +no +'&status='+claimstatus,
+		       
+		        data : {
+		        	id:no ,
+		        	status:claimstatus
+		     
+		     
+		       }
+		    })
+		    .then(function successCallback(response) {
+			    $scope.getPendingpolicy(); 
+		    }, function errorCallback(response) {
+		    alert("Server Error. Try After Some time: " + response);
+
+		  });
+
+
+		  
+		  
+	}
+	
+	$scope.rejectpolicyStatus=function(no){
+		  
+		console.log(no);
+		  
+		        var claimstatus="rejected";
+		        
+		    $http({
+		        'method': 'PUT',
+		        url:'http://10.20.14.83:9002/imservices/policy?policyNumber=' +no +'&status='+claimstatus,
+		       
+		        data : {
+		        	id:no ,
+		        	status:claimstatus
+		     
+		     
+		       }
+		    })
+		    .then(function successCallback(response) {
+			    $scope.getPendingpolicy();
+		    }, function errorCallback(response) {
+		    	alert("Server Error. Try After Some time: " + response);
+
+		  });
+
+		 }
+	
+
+	
+	$scope.getPendingClaims= function(){
+		//console.log("hello");
+		$http({
+	        method : 'GET',
+	        url : 'http://10.20.14.83:9002/imservices/claim/pending',
+	        headers : {
+	              'Content-Type' : 'application/json',
+	              'Access-Control-Allow-Origin': 'http://10.20.14.83:9001/'
+	        }}).
+	        then(function successCallback(response) {
+	        	$scope.pendingClaims = response.data;
+	        	$scope.hideAllDivs();
+	        	$scope.pendingClaimsDiv = true;
+	        });             
+	}
+	
+	$scope.rejectClaimStatus=function(id1){
+		//console.log(id1);
+		 var claimstatus="rejected";
+		 $http({
+			 'method': 'PUT',
+			 url:'http://10.20.14.83:9002/imservices/claim?id=' +id1 +'&claimStatus='+claimstatus,
+			 data: {
+				 id:	id1 ,
+				 claimStatus : claimstatus
+		       }
+		    })
+		    .then(function successCallback(response) {
+		    	$scope.getPendingClaims();
+		    },function errorCallback(response) {
+		    	alert("Server Error. Try After Some time: " + response);
+		  });
+
+
+	}
+	
+
+	$scope.approveClaimStatus=function(id1){
+		  
+		//console.log(id1);
+		var claimstatus="rejected";
+		$http({
+			method: 'PUT',
+			url: serverAddr +'/imservices/claim?id=' +id1 +'&claimStatus='+claimstatus,
+			data : {
+		        	id:id1 ,
+		        	claimStatus:claimstatus
+				}
+		    })
+		    .then(function successCallback(response){
+		    	$scope.getPendingClaims();
+		    },function errorCallback(response){
+		    	alert("Server Error. Try After Some time: " + response);
+		    });
+		}
+	
+
+	$scope.getPendingagents = function(){
+		console.log("hello");
+		var users=[];
+		$http({
+	        method : 'GET',
+	        url : 'http://10.20.14.83:9002//imservices/agent/pending',
+	        headers : {
+	              'Content-Type' : 'application/json',
+	              'Access-Control-Allow-Origin': 'http://10.20.14.83:9001/'
+	        }}).then(function successCallback(response) {
+	        	$scope.pendingAgents = response.data;
+	        	$scope.hideAllDivs();
+	        	$scope.pendingAgentsDiv = true;
+	        });             
+	};
+
+
+	$scope.approveagentStatus=function(username){
+	  
+	  
+	     var claimstatus="approved";
+	        
+	    $http({
+	        'method': 'PUT',
+	        url:'http://10.20.14.83:9002/imservices/agent?userName=' + username +'&userType='+claimstatus,
+	       
+	        data : {
+	        	userName: $scope.uname,
+	        	userType:claimstatus
+	        	}
+	    })
+	    .then(function successCallback(response) {
+	    	$scope.getPendingagents();
+	    }, function errorCallback(response) {
+	    	alert("Server Error. Try After Some time: " + response);
+
+	  });
+
+
+	  
+	  
+	 }
+
+
+$scope.rejectagentStatus=function(username){
+	  
+
+		  
+		        var claimstatus="rejected";
+		        
+		    $http({
+		        'method': 'PUT',
+		        url:'http://10.20.14.83:9002/imservices/agent?userName=' +username +'&userType='+claimstatus,
+		       
+		        data : {
+		        	userName:username ,
+		        	userType:claimstatus
+		     
+		     
+		       }
+		    })
+		    .then(function successCallback(response) {
+		    	$scope.getPendingagents();
+		    }, function errorCallback(response) {
+		    alert("Server Error. Try After Some time: " + response);
+
+		  });
+
+		 }
+	
+	
+	$scope.logout = function(){
+		$cookieStore.put('auth-token', null);
+		$cookieStore.put('uname', null);
+		$cookieStore.put('userType', null);
+		$location.path('/');
+	}
+	
+	$scope.getAllProducts = function(){		
+		$http({
+			method : 'GET',
+				url : serverAddr+ '/imservices/product',
+			headers : {
+						'Content-Type' : 'application/json',
+						'Access-Control-Allow-Origin': serverAddr,
+	
+					}
+		}).then(function successCallback(response) {
+				$scope.allProducts = response.data;
+				$scope.hideAllDivs();
+				$scope.productsDisplayDiv=true;
+				
+				
+        }, function errorCallback(response) {
+        		alert("Server Error. Try After Some time: " + response);
+        });
+		
+		$scope.searchProductName = "";
+		$scope.searchAgentUName = "";
+	
+	}
+	
+	// view specific product
+	$scope.viewProductDetails = function(prd){
+		$scope.detailProduct = prd;
+		$scope.hideAllDivs();
+		$scope.productsDisplayDiv = true;
+		$scope.productDetails = true;
+	}
+
+	$scope.hideProductDetails = function(){
+		$scope.productDetails = false;
+	}
+	
+	$scope.getAllAgents = function(){		
+		$http({
+			method : 'GET',
+				url : serverAddr+ '/imservices/agent',
+			headers : {
+						'Content-Type' : 'application/json',
+						'Access-Control-Allow-Origin': serverAddr,
+	
+					}
+		}).then(function successCallback(response) {
+				$scope.allAgents = response.data;
+				$scope.hideAllDivs();
+				$scope.agentsDisplayDiv = true;
+        }, function errorCallback(response) {
+        		alert("Server Error. Try After Some time: " + response);
+        });		
+		
+		$scope.searchProductName = "";
+		$scope.searchAgentUName = "";
+	}
+	
+	// view specific agent
+	$scope.viewAgentDetails = function(ag){
+		$scope.detailAgent = ag;
+		$scope.hideAllDivs();
+		$scope.agentsDisplayDiv = true;
+		$scope.agentDetails = true;
+		
+	}
+
+	$scope.hideAgentDetails = function(){
+		$scope.agentDetails = false;
+	}
+	
+	$scope.hideAllDivs= function(){
+		$scope.pendingPoliciesDiv = false;
+		$scope.pendingClaimsDiv = false;
+		$scope.pendingAgentsDiv = false;
+		
+		$scope.productsDisplayDiv=false;
+		$scope.productDetails = false;
+		$scope.agentsDisplayDiv = false;
+		$scope.agentDetails = false;
+		
+	}
+
+}
+
+
 controllers.IController = IController;
 controllers.dCustomerController = dCustomerController;
+controllers.adminController = adminController;
 
 myMod.controller(controllers);
 
@@ -1095,6 +1415,23 @@ myMod.config(function($routeProvider){
 		controller	:	'dCustomerController',
 		templateUrl	:	'DCustomer.html'
 	})
+	.when('/admin', {
+		controller	:	'adminController',
+		templateUrl	:	'admin.html'
+	})
+//	.when('/privacy', {
+//		controller	:	'IController',
+//		templateUrl	:	'privacypolicy.html'
+//	})
+//	.when('/termsOfUse', {
+//		controller	:	'dCustomerController',
+//		templateUrl	:	'termsofuse.html'
+//	})
+//	.when('/listingPolicy', {
+//		controller	:	'adminController',
+//		templateUrl	:	'listingpolicy.html'
+//	})
+//	
 	
 	.otherwise({redirectTo: '/'})
 });

@@ -1,10 +1,10 @@
 var serverAddr = "http://10.20.14.83:9002";
 
 var insuranceApp = angular.module('AD_insuranceApp', ['ngRoute', 'ngCookies']);
+
 insuranceApp.directive('ngNav', function() {
 	return {
-		restrict: 'E',//E = element, A = attribute, C = class, M = comment
-	
+		restrict: 'E',//E = element, A = attribute, C = class, M = comment	
 		templateUrl: 'navbar.html',
 		controller : 'registerController',
 		link: function(scope, iElement, iAttrs) {
