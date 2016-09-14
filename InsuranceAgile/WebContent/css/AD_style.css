@@ -1,3 +1,126 @@
+/* login button */
+
+.userContents {
+	margin-left: 250px;
+}
+
+.logout {
+	cursor: pointer;	
+}
+
+.logout span:HOVER {
+	color:white;	
+}
+
+
+.dropbtn {
+    background-color: #2E86C1;
+    color: white;
+    padding: 12px 12px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+/*     width:160px; */
+	margin-top: -12px;
+	margin-bottom: -12px; 
+
+}
+
+.dropdown {
+/*     position: relative; */
+/*     display: inline-block; */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #80bfff}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #48C9B0;
+}
+/* login button */
+
+
+/* user related functionality bar */
+.sidenav {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 0px;
+    left: 0px;
+    background-color: black;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 20px;
+    padding-left:40px; 
+    padding-right:40px; 
+    
+    font-size: large;
+    color: #818181;
+}
+
+.sidenav a {
+
+    padding: 8px 8px 8px 0px;
+    text-decoration: none;
+/*     	text-align: center; */
+    font-size: 20px;
+    color: #818181;
+/*     background-color : blue; */
+    display: block;
+    transition: 0.3s;
+
+    border-bottom : 2px solid grey;
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.sidenav img {
+	margin-left: 25%;
+	border-color: darkgrey;
+/* 	border-width: 5px; */
+/* 	border-style: solid; */
+	border-radius : 50%;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 20px;}
+  .sidenav a {font-size: 18px;}
+}
+
+/* user related functionality bar */
+
+
 /* For all elements */
 * {
     box-sizing: border-box;
@@ -15,7 +138,7 @@
 .all-products-agents {
      border: solid;
      border-width: 2px;
-     border-color: #575258;
+     border-color: #17202A;
 }
 
 .fixed-details{
@@ -30,7 +153,7 @@ hr {
     display: block;
     height: 1px;
     border: 0;
-    border-top: 1px solid #575258;
+    border-top: 1px solid #17202A;
     margin: 1em 0;
     padding: 0; 
 }
@@ -40,10 +163,11 @@ hr {
 /* 	border-left: 1px solid #17202A; */
 /* 	border-right:1px solid #17202A; */
 	border-bottom : 1px solid #17202A;
-	color : white;
+	color : #2E86C1;
 	font-size: small;
-	margin-bottom: 10px;
-	margin-top : 10px;
+	padding-bottom : 15px;
+	padding-top : 15px;
+
 }
 
 
@@ -53,7 +177,7 @@ label.headerlink{
 	  margin-right : 20px;
 	  font-size: 14px;
 	  font-style: normal;
-	  font-size: larger;
+	  font-size: medium;
 }
 
 span.headerlink{
@@ -116,21 +240,12 @@ div .row .xxx:HOVER{
 
 
 
-.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
-    color: white;
-    background-color: black;
-}
 
-.navbar-inverse .navbar-nav>li>a {
-    color: #0E92CA;
-}
-
-
-
-body {font-family: Verdana,sans-serif;
-background-color: #283747    ;
-color: white;
-font-size: 1.5em;
+body {
+	font-family: Verdana,sans-serif;
+	background-color: white;
+	color: #2E86C1;
+	font-size: 1.5em;
 }
 
 header {
@@ -138,7 +253,7 @@ header {
 	width:100%;
 	height : 70px;
 	position: relative;
-	background-color: #17202A;
+	background-color: #2E86C1;
 }
 
 footer{
@@ -207,8 +322,8 @@ footer{
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    /*background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+/*     background-color: rgb(0,0,0); Fallback color */
+    background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
     padding: 0px;
 }
 	
@@ -225,7 +340,8 @@ footer{
     position: relative;
 }
 
-.modal input[type=text], input[type=password],input[type=email],input[type=tel],input[type=number],input[type=file] {
+.modal input[type=text], input[type=password],input[type=email],
+input[type=tel],input[type=number],input[type=file], select {
     width: 100%;
     padding: 8px 8px;
     margin: 6px 0;
@@ -233,6 +349,7 @@ footer{
     border: 1px solid #ccc;
     box-sizing: border-box;
     border-radius : 0px;
+    color:black;
 }
 
 .modal .row{
@@ -249,6 +366,19 @@ footer{
     box-sizing: border-box;
 }
 
+.modal span{
+	color:black;
+}
+
+
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+    color : #2E86C1;
+}
+
 .modal label{
     width: 100%;
     padding: 6px 0px;
@@ -257,27 +387,46 @@ footer{
     display: inline-block;
 	text-align: left;
 	font-size : 90%;
+	color : black;
 }
 
 label.label-large{
 	font-size: x-large;
-	color: white;
+	color: #2E86C1;
 }
 
 label.label-medium{
 	font-size: large;
-	color: white;
+	color: #2E86C1;
 }
 
 label.label-small{
 	font-size: medium;
-	color: white;
+	color: #2E86C1;
+}
+
+label.label-large-black{
+	font-size: x-large;
+	color: black;
+	text-align: center;
+}
+
+label.label-medium-black{
+	font-size: large;
+	color: black;
+	text-align: center;
+}
+
+label.label-small-black{
+	font-size: medium;
+	color: black;
+	text-align: center;
 }
 
 a.anchor-big{
 	font-size: 18px;
 	text-decoration: none;
-	color : white;
+	color : #2E86C1;
 }
 
 a.anchor-big:focus{
