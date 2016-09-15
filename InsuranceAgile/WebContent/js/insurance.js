@@ -159,7 +159,7 @@ var IController = function($scope,$rootScope,$http,$cookieStore, $location) {
 									                    $cookieStore.put('uname', response.data.userName);
 									                    $cookieStore.put('userType', "ADMIN");
 									                    $scope.closeModal('loginUser');
-//									    		    	$scope.showMyAlertDialog("Success!", "Loading details.");
+//									    		    	$scope.showMyAlertDialog("Success!", "Loading details...");
 														$location.path('/admin');
 														}
 												else
@@ -383,8 +383,8 @@ var IController = function($scope,$rootScope,$http,$cookieStore, $location) {
 									userType	:	"DIRECR CUSTOMER"
 								}
 						}).then(function successCallback(response){
-							alert ("Registered successfully");
-							
+							//alert ("Registered successfully");
+							$scope.showMyAlertDialog("Success!", "Registered successfully");
 							$scope.closeModal('registerUser');
 							// NOW REDIRECT TO LOGIN PAGE
 						}, 
@@ -485,82 +485,7 @@ var IController = function($scope,$rootScope,$http,$cookieStore, $location) {
 
 			};
 				
-				$scope.registerUser = function(){		
-					// check length of username
-
-					if($scope.uname.length < 6){
-						$scope.registerUnameErrMsg = "Username should be at least 6 characters long";
-						$scope.uname.focus();
-						return;
-					}
-					else
-						{
-							$scope.registerUnameErrMsg = "";
-						}
-					// if password length doesn't satisfy to 8 chars long
-					if ($scope.psw.length < 8){
-						$scope.registerswErrMsg = "Password should be at least 8 characters long";
-						return;
-					}
-					else
-						{
-						$scope.registerswErrMsg = "";
-						}
-					
-					
-					// if password wrong dont proceed 
-					if ($scope.cpsw != $scope.psw){
-						$scope.registerCpswErrMsg = "Re-entered password mismatched";
-						return;
-					}
-					else
-						{
-							$scope.registerCpswErrMsg = "";
-						}
-					//check for ifUserExists
-					
-					$scope.userExists = false;
-					
-					$scope.ifUserExists();	
-					
-					
-					if ($scope.userExists == true)
-						{
-							return;
-						}
-					
-					// fire POST request
-					$http({
-						
-						method	:	'POST',
-						url		:	serverAddr + '/imservices/user',
-						header	:	
-							{
-								'Content-Type' : 'application/json',
-								'Access-Control-Allow-Origin' :	serverAddr
-							},
-						data : 
-							{
-								firstName	:	$scope.fname,
-								lastName	:	$scope.lname,
-								address		:	$scope.address,
-								state		:	$scope.state,
-								city		:	$scope.city,
-								contactNo	:	$scope.contact,
-								email		:	$scope.email,
-								userName	:	$scope.uname,
-								password	:	$scope.psw,
-								userType	:	"DIRECT CUSTOMER"
-							}
-					}).then(function successCallback(response){
-						alert ("Registered successfully");		
-						// NOW REDIRECT TO LOGIN PAGE
-					}, 
-					
-					function errorCallback(response){
-							alert("Error : \n" + response.data);	
-					});
-				}
+				
 			
 			
 //===========================================agent registration============================

@@ -52,24 +52,26 @@
 						<div class="row face in" >
 									<div class="row">
 										<div class="col-sm-6 form-group">
-											<label>Choose policy</label>
-											<select class="" ng-model="purchasePolicyName"	style="width:100%;" required >
-													<option >--Select policy--</option>
-													<option  ng-repeat="prod in allPolicies">{{ prod.productName }}</option>
-											</select>
+												<label>Choose policy*</label>
+												<select class="" ng-model="purchasePolicyName" name="purchasePolicyName"	style="width:100%;" required >
+														<option  ng-repeat="prod in allPolicies">{{ prod.productName }}</option>
+												</select>
+												<p id="camt" class="text-danger" ng-show="policyForm.purchasePolicyName.$touched && policyForm.purchasePolicyName.$invalid">Choose policy name</p>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-sm-6 form-group">
 											<label>Annual Income </label>(in &#8377;)* <br>
 											<input type="number" placeholder="Annual income" 
-												min=10000  ng-model="purchasePolicyAnnualIncome" required>
+												min=10000  ng-model="purchasePolicyAnnualIncome" name="purchasePolicyAnnualIncome" required>
+											<p id="camt" class="text-danger" ng-show="policyForm.purchasePolicyAnnualIncome.$touched && policyForm.purchasePolicyAnnualIncome.$invalid">Enter annual income (minimum 10000)</p>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-sm-6 form-group">
 											<label>Employment*</label><br>
-											<input type="number" placeholder="Service in years" ng-model="purchasePolicyEmployment" min="0" max="60" required>
+											<input type="number" placeholder="Service in years" ng-model="purchasePolicyEmployment" name="purchasePolicyEmployment" min="0" max="60" required>
+											<p id="camt" class="text-danger" ng-show="policyForm.purchasePolicyEmployment.$touched && policyForm.purchasePolicyEmployment.$invalid"> Enter employment in terms of years </p>
 										</div>
 									</div>	
 									<div class="row">
@@ -316,16 +318,15 @@
 					<div class="row face in"  >
 					      <div class="row" >
 					      	 <div class="col-sm-6 form-group">
-						      	<label>Claim amount</label>
+						      	<label>Claim amount*</label>
 						        <input type="number" ng-model="claimAmount" class="form-control" class="control-label" placeholder="Claim Amount" name="claimAmt" min=10000 required>
 						        <p id="camt" class="text-danger" ng-show="claimForm.claimAmt.$touched && claimForm.claimAmt.$invalid">Min Claim Amount is 10000!</p>
 						      </div>
 					      </div>
 					      <div class="row">
 					      	<div class="col-sm-6 form-group">
-						      	<label>Choose policy</label>
+						      	<label>Choose policy*</label>
 								<select class="form-control" ng-model="policyName" name="policyName" placeholder="Policy Name" style="width:100%;" required >
-									<option >--Select policy--</option>
 									<option  ng-repeat="prod in allProducts">{{ prod.productName }}</option>
 								</select>
 						        <p id="pval1" class="text-danger" ng-show="claimForm.policyName.$touched && claimForm.policyName.$invalid">Policy Name is required!</p>
@@ -334,7 +335,7 @@
 					
 					      <div class="row">
 					      	<div class="col-sm-6 form-group">
-						        <label>Claim amount</label>
+						        <label>Policy number*</label>
 						        <input type="text" ng-model="policyNumber" class="form-control" placeholder="Policy Number" name="policyNumber" required>
 						        <p id="pval" class="text-danger" ng-show="claimForm.policyNumber.$touched && claimForm.policyNumber.$invalid">Policy Number is required!</p>
 						     </div>
@@ -351,8 +352,12 @@
 					     </div>
 					     
 					     <div class="row">
+										<div class="col-sm-8 form-group">
+											<label>* All Fields are mandatory</label>
+										</div>
+						</div>
+					     <div class="row">
 					     	<div class="col-sm-6 form-group"> 
-					     		<br>
 					            <input type="submit" name="claim-submit" id="claim-submit" ng-disabled="claimForm.$invalid"class="btn btn-info btn-lg" value="Submit Claim"
 					            ng-click="claimSubmit()">
 					     	</div>

@@ -398,7 +398,7 @@ input[type=tel],input[type=number],input[type=file], select {
     border: 1px solid #ccc;
     box-sizing: border-box;
     border-radius : 0px;
-    color:black;
+/*     color:black; */
 }
 
 .modal .row{
