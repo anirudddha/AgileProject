@@ -1,3 +1,4 @@
+
 var myMod = angular.module('insuranceApp', ['ngRoute','ngCookies']);
 var serverAddr = "http://10.20.14.83:9002";
 
@@ -28,7 +29,7 @@ var IController = function($scope,$rootScope,$http,$cookieStore, $location) {
 			$scope.ifLoggedIn = function(){
 				if($cookieStore.get('auth-token')==null )
 				{
-					$location.path('/');
+					//$location.path('/');
 				}
 				if($cookieStore.get('auth-token')!=null && $cookieStore.get('userType')=="DIRECT CUSTOMER")
 					{
@@ -152,12 +153,13 @@ var IController = function($scope,$rootScope,$http,$cookieStore, $location) {
 		//											console.log("/agent/"+$cookieStore.get("uname")+"/"+$cookieStore.get("userType")+"/"+$cookieStore.get("auth-token"));
 		//										}
 		//										else
-												if ( data.userName == "admin"){
+												if ( data.userName == "ADMIN"){
 														$scope.userType = "ADMIN";
 														$cookieStore.put('auth-token', response.data['id']);
 									                    $cookieStore.put('uname', response.data.userName);
 									                    $cookieStore.put('userType', "ADMIN");
 									                    $scope.closeModal('loginUser');
+//									    		    	$scope.showMyAlertDialog("Success!", "Loading details.");
 														$location.path('/admin');
 														}
 												else
@@ -168,6 +170,7 @@ var IController = function($scope,$rootScope,$http,$cookieStore, $location) {
 									                    $cookieStore.put('uname',response.data.userName);
 									                    $cookieStore.put('userType', "DIRECT CUSTOMER");
 									                    $scope.closeModal('loginUser');
+//									                    $scope.showMyAlertDialog("Success!", "Loading details.");
 														$location.path('/DCustomer');
 													}
 		//										else{
@@ -187,7 +190,7 @@ var IController = function($scope,$rootScope,$http,$cookieStore, $location) {
 							        		$cookieStore.put('userType',null);
 							        		alert("Server Error. Try After Some time: " + response);
 								});
-
+								
 //						$scope.closeModal('loginUser');
 				    }
 					
@@ -250,6 +253,43 @@ var IController = function($scope,$rootScope,$http,$cookieStore, $location) {
 						$scope.uname = $scope.uname.toUpperCase();
 						
 						$scope.ifUserExists();
+					}
+					
+					$scope.agentnameCheck = function(){		
+						un = $scope.uname;
+
+						var len = $scope.uname.length;
+				
+						// if number or characters then only accept
+						// try for space also
+						if( ( (un.charCodeAt(len - 1) >= 65 ) && (un.charCodeAt(len - 1) <= 90 ) ||
+							(un.charCodeAt(len - 1) >= 97 ) && (un.charCodeAt(len - 1) <= 122 )||
+							(un.charCodeAt(len - 1) >= 48 ) && (un.charCodeAt(len - 1) <= 57) ) ){  
+								//accepted
+						}
+						else
+							{
+								$scope.uname = un.slice(0, un.length - 1);
+								$scope.registerUnameErrMsg = "Username cannot contain special characters and white space";
+							}
+						
+						un = $scope.uname;
+						len = $scope.uname.length;
+						if ( len < 6){
+								$scope.registerUnameErrMsg = "Username should be at least 6 characters long";
+							}
+						else
+							{
+								$scope.registerUnameErrMsg = "";
+							}
+						
+						un = $scope.uname;
+						len = $scope.uname.length;
+						
+						//convert uname to uppercase
+						$scope.uname = $scope.uname.toUpperCase();
+						
+						$scope.ifAgentExists();
 					}
 					
 					$scope.passwordLengthCheck = function(){
@@ -355,7 +395,7 @@ var IController = function($scope,$rootScope,$http,$cookieStore, $location) {
 					};
 
 					
-			$scope.ifUserExists = function(){
+					$scope.ifUserExists = function(){
 						
 						var uname = $scope.uname;
 						var email = $scope.email;
@@ -401,6 +441,49 @@ var IController = function($scope,$rootScope,$http,$cookieStore, $location) {
 								})		
 
 				};
+				
+				$scope.ifAgentExists = function(){
+					
+					var uname = $scope.uname;
+					var email = $scope.email;
+					
+					
+							//	fire query to server
+							$http({
+								method	:	'GET',
+								url		:	serverAddr + '/imservices/user/check?userName=' + uname + '&email=' + email ,
+								header	:	
+								{
+									'Content-Type' : 'application/json',
+									'Access-Control-Allow-Origin' :	serverAddr  
+								}
+							}).then(function mySucces(response) {
+								
+								$scope.registerEmailUserExists = "";
+								$scope.registerUnameUserExists = "";
+							
+								if (response.data.status == "userName-fail"){
+									
+									$scope.userExists = true;
+								}
+								else
+									{
+										$scope.registerUnameUserExists = "Username does not exist";
+										$scope.userExists = false;
+									}
+								
+								// ask for this to sir
+			//					if(response.data.status == "userName-email-fail"){
+			//						$scope.registerEmailUserExists = "Email exists";
+			//						$scope.registerUnameUserExists = "Username exists";
+			//						return true;
+			//					}
+							}
+							, function myError(response) {
+						        $scope.myWelcome = response.statusText;
+							})		
+
+			};
 				
 				$scope.registerUser = function(){		
 					// check length of username
@@ -582,9 +665,11 @@ var IController = function($scope,$rootScope,$http,$cookieStore, $location) {
 				}).then(function successCallback(response){
 					var data=response.data;
 					if(response.data.userName!=null){
-					   alert("successfully register!!!");
+//					   alert("successfully register!!!");
+						$scope.showMyAlertDialog("Success", "Agent registered");
 					   $scope.closeModal('registerAgent');
-						$location.path('/agent');
+					   
+					   	
 						
 						
 					}
@@ -711,6 +796,21 @@ var IController = function($scope,$rootScope,$http,$cookieStore, $location) {
 				$scope.productDetails = false;
 			}
 			
+			$scope.showMyAlertDialog = function (hdr, msg){
+				$scope.header = hdr;
+				$scope.message = msg;
+				
+				$('#myAlertDialog').modal('show');
+				$(function() {
+				    setTimeout(function() {
+				        $("#myAlertDialog").modal('hide')
+				    }, 2500);
+				});
+			}
+			
+			$scope.emptyErrMsg = function(){
+				$scope.passwordErr = "";
+			}
 };
 				
 				
@@ -819,6 +919,12 @@ var dCustomerController = function($scope, $rootScope, $http, $cookieStore, $loc
 						//alert ("Your policy is created. Wait for its appoval. We will contact soon!");
 						$scope.showMyAlertDialog("Success!", "Policy purchased.");
 						//empty the fields
+						$scope.purchasePolicyName = "";
+						$scope.purchasePolicyAnnualIncome = null;
+						$scope.purchasePolicyEmployment = null;
+						$scope.policyDocument1 = false;
+						$scope.policyDocument2 = false;
+						$scope.policyDocument3 = false;
 					}
 					else{
 						alert("you have entered invalid data!!");
@@ -904,8 +1010,19 @@ var dCustomerController = function($scope, $rootScope, $http, $cookieStore, $loc
 	}
 	
 	$scope.showSubmitClaimDiv = function(){
-		console.log('Reached in submit claim div');
+		
 		$scope.hideAllDivs();
+		$http({
+			method : 'GET',
+				url : serverAddr+ '/imservices/product',
+			headers : {
+						'Content-Type' : 'application/json',
+						'Access-Control-Allow-Origin': serverAddr,
+	
+					}
+		}).then(function successCallback(response) {
+				$scope.allProducts = response.data;
+		})
 		$scope.submitClaimDiv = true;
 	}
 	
@@ -941,8 +1058,13 @@ var dCustomerController = function($scope, $rootScope, $http, $cookieStore, $loc
 			    	  	if((response.data.id!= null)) {
 	    
 			    	  		//alert("successfully submitted");
-			    	  		$scope.showMyAlertDialog("Sucess!", "Claim submitted.");
-	    
+			    	  		$scope.showMyAlertDialog("Success!", "Claim submitted.");
+			    	  		$scope.claimAmount = null;
+			    	  		$scope.policyName = null;
+			    	  		$scope.policyNumber = null;
+			    	  		$scope.claimDocument1 = false;
+			    	  		$scope.claimDocument2 = false;
+			    	  		$scope.claimDocument3 = false;
 			    	  	} 
 	   
 			    	  	else{
@@ -1070,8 +1192,8 @@ var dCustomerController = function($scope, $rootScope, $http, $cookieStore, $loc
 
 var adminController = function($scope, $rootScope, $http, $cookieStore, $location){
 	console.log("reached in adminController");
+	
 	$scope.ifLoggedIn = function(){
-		
 		if($cookieStore.get('auth-token')==null )
 			{
 				$location.path('/');
@@ -1140,6 +1262,7 @@ var adminController = function($scope, $rootScope, $http, $cookieStore, $locatio
 		    })
 		    .then(function successCallback(response) {
 			    $scope.getPendingpolicy(); 
+			    $scope.showMyAlertDialog("Success!", "Policy approved.");
 		    }, function errorCallback(response) {
 		    alert("Server Error. Try After Some time: " + response);
 
@@ -1169,6 +1292,7 @@ var adminController = function($scope, $rootScope, $http, $cookieStore, $locatio
 		    })
 		    .then(function successCallback(response) {
 			    $scope.getPendingpolicy();
+			    $scope.showMyAlertDialog("Success!", "Policy rejected.");
 		    }, function errorCallback(response) {
 		    	alert("Server Error. Try After Some time: " + response);
 
@@ -1207,6 +1331,7 @@ var adminController = function($scope, $rootScope, $http, $cookieStore, $locatio
 		    })
 		    .then(function successCallback(response) {
 		    	$scope.getPendingClaims();
+		    	$scope.showMyAlertDialog("Success!", "Claim rejected.");
 		    },function errorCallback(response) {
 		    	alert("Server Error. Try After Some time: " + response);
 		  });
@@ -1229,6 +1354,7 @@ var adminController = function($scope, $rootScope, $http, $cookieStore, $locatio
 		    })
 		    .then(function successCallback(response){
 		    	$scope.getPendingClaims();
+		    	$scope.showMyAlertDialog("Success!", "Claim approved.");
 		    },function errorCallback(response){
 		    	alert("Server Error. Try After Some time: " + response);
 		    });
@@ -1268,6 +1394,7 @@ var adminController = function($scope, $rootScope, $http, $cookieStore, $locatio
 	    })
 	    .then(function successCallback(response) {
 	    	$scope.getPendingagents();
+	    	$scope.showMyAlertDialog("Success!", "Agent approved.");
 	    }, function errorCallback(response) {
 	    	alert("Server Error. Try After Some time: " + response);
 
@@ -1279,11 +1406,8 @@ var adminController = function($scope, $rootScope, $http, $cookieStore, $locatio
 	 }
 
 
-$scope.rejectagentStatus=function(username){
-	  
-
-		  
-		        var claimstatus="rejected";
+	$scope.rejectagentStatus=function(username){
+		var claimstatus="rejected";
 		        
 		    $http({
 		        'method': 'PUT',
@@ -1298,12 +1422,14 @@ $scope.rejectagentStatus=function(username){
 		    })
 		    .then(function successCallback(response) {
 		    	$scope.getPendingagents();
+		    	$scope.showMyAlertDialog("Success!", "Agent rejected.");
+		    	
 		    }, function errorCallback(response) {
 		    alert("Server Error. Try After Some time: " + response);
 
 		  });
 
-		 }
+	}
 	
 	
 	$scope.logout = function(){
@@ -1394,7 +1520,22 @@ $scope.rejectagentStatus=function(username){
 		$scope.agentDetails = false;
 		
 	}
-
+	
+	$scope.showMyAlertDialog = function (hdr, msg){
+		$scope.header = hdr;
+		$scope.message = msg;
+		
+		$('#myAlertDialog').modal('show');
+		$(function() {
+		    setTimeout(function() {
+		        $("#myAlertDialog").modal('hide')
+		    }, 2500);
+		});
+	}
+	
+	$scope.gotoHome = function(){
+		$scope.hideAllDivs();
+	}
 }
 
 
@@ -1419,6 +1560,11 @@ myMod.config(function($routeProvider){
 		controller	:	'adminController',
 		templateUrl	:	'admin.html'
 	})
+	.when('/aboutus', {
+		controller	:	'IController',
+		templateUrl	:	'aboutus.html'
+	})
+											
 //	.when('/privacy', {
 //		controller	:	'IController',
 //		templateUrl	:	'privacypolicy.html'

@@ -1,9 +1,35 @@
 
+.foo {
+	
+	background-color: #26282b;
+	color: white;
+	height : 60px;
+	bottom : 0px;
+	position: absolute;
+}
+
+.wrapper {
+min-height: 100%;
+height: auto !important;
+height: 100%;
+margin: 0 auto -4em;
+}
+
+
+.footer, .push {
+height: 4em;
+}
+
+
+.featurette-heading {
+    font-size: 50px;
+}
+
 
 .carousel-inner>.item>a>img, .carousel-inner>.item>img, .img-responsive, .thumbnail a>img, .thumbnail>img 
 	{
 		margin: 0 auto;
-    	height: 300px;
+    	height: 600px;
     	width : 100%;
     }
 
@@ -414,7 +440,7 @@ label {
     margin-right : 3px;
     display: inline-block;
 	text-align: left;
-	font-size : 90%;
+	font-size : 75%;
 	color : black;
 }
 
@@ -459,7 +485,7 @@ a.anchor-big{
 	font-size: 18px;
 	text-decoration: none;
 	color :	#26282b;
-
+	font-weight: bold;
 }
 
 a.anchor-big:focus{
@@ -469,7 +495,7 @@ a.anchor-big:focus{
 
 a.anchor-big:hover{
 	color : black;
-	font-size: x-large;
+	font-style: italic;
 }
 
 

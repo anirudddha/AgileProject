@@ -12,18 +12,19 @@
 			<a href="#/" class="anchor-big" ng-click="getAllAgents()"> <span class = "glyphicon" >  </span> Agents </a> 
 		</div>
 		<div class = "col-sm-2 common-function" align ="center">
-			<a href="#/" class="anchor-big" > <span class = "glyphicon" >  </span> About us </a> 
+			<a href="#/aboutus" class="anchor-big" > <span class = "glyphicon" >  </span> About us </a> 
 		</div>
 		<div class = "col-sm-2 common-function" align="center">
-			<a href="#/" class="anchor-big" > <span class = "glyphicon" > </span> Contact us </a> 
+			<a href="#/" class="anchor-big" ng-click="openModal('registerAgent')"> <span class="glyphicon glyphicon-user" ></span> Be an Agent</a>
 		</div>	
 <!-- 		<div class = "col-sm-2 common-function" align="center">
 			<a href="#/" class="anchor-big" > <span class = "glyphicon" > </span> Login </a> 
-			
 		</div>    -->
  		
 		<div class="col-sm-2 common-function dropdown" align="center">
 		  <button class="dropbtn" ng-click="openModal('loginUser')"><span class="glyphicon glyphicon-log-in" ></span> Login</button>
+		  
+		  
 <!-- 		  <div class="dropdown-content" align="left"> -->
 <!-- 		  	<a><span ng-click="openModal('loginUser', 'ADMIN')"><span class="glyphicon glyphicon-user"></span> Admin</span></a> -->
 <!-- 		   	<a><span ng-click="openModal('loginAgent', 'AGENT')"> <span class="glyphicon glyphicon-user"></span> Agent</span></a>   -->
@@ -36,6 +37,8 @@
 	<br>
 
 	<!-- here is all the data to be displayed instead of the background image -->
+
+	<!-- carousel -->
 			<div class = "row fade in" ng-show="homepageBGImage" >
 					<div id="myCarousel" class="carousel slide" data-ride="carousel">
 						    <!-- Indicators -->
@@ -44,24 +47,29 @@
 						      <li data-target="#myCarousel" data-slide-to="1"></li>
 						      <li data-target="#myCarousel" data-slide-to="2"></li>
 						      <li data-target="#myCarousel" data-slide-to="3"></li>
+						      <li data-target="#myCarousel" data-slide-to="4"></li>
 						    </ol>
 						
 						    <!-- Wrapper for slides -->
 						    <div class="carousel-inner" role="listbox">
 						      <div class="item active">
-						        <img src="images/carousel/carousel_1.jpg" alt="Chania">
+						        <img src="images/carousel/carousel_2.jpg" alt="Img not loaded" >
 						      </div>
-						
+							  
+							  <div class="item">
+						        <img src="images/carousel/carousel_7.jpg" alt="Img not loaded" >
+						      </div>
+						      
 						      <div class="item">
-						        <img src="images/carousel/carousel_2.jpg" alt="Chania" >
+						        <img src="images/carousel/carousel_6.jpg" alt="Img not loaded">
 						      </div>
 						    
 						      <div class="item">
-						        <img src="images/carousel/carousel_3.jpg" alt="Flower" >
+						        <img src="images/carousel/carousel_3.jpg" alt="Img not loaded" >
 						      </div>
 						
 						      <div class="item">
-						        <img src="images/carousel/carousel_4.jpg" alt="Flower" >
+						        <img src="images/carousel/carousel_4.jpg" alt="Img not loaded" >
 						      </div>
 						    </div>
 						
@@ -76,11 +84,7 @@
 						    </a>
 					</div>
 			</div>		
-	
-	
-	
-	
-	
+ 	
 			<!--  displays products only  -->
 				<div class = "row"  ng-show="productsDisplayDiv" >
 				  <br>
@@ -100,7 +104,7 @@
 									<!-- formating row wise -->
 					 				<div class="row">
 											<div class="col-sm-3 productImg">
-												<img src="images/logo1.png" width=120px height=70px > 
+												<img src="images/logo1.png" width=100% height=70px > 
 											</div>
 											<div class="col-sm-9">
 												<label class="label-large">{{ product.productName }}</label><br>
@@ -303,7 +307,7 @@
 							</div>
 							<div class="col-sm-11">
 								<label><span class="glyphicon glyphicon-earphone"></span></label>
-								<label>{{ detailAgent.phone }}</label> 
+								<label>&nbsp; {{ detailAgent.phone }}</label> 
 							</div>							
 						</div>
 						
@@ -312,7 +316,7 @@
 							</div>
 							<div class="col-sm-11">
 								<label><span class="glyphicon glyphicon-envelope"></span></label>
-								<label>{{ detailAgent.email }}</label> 
+								<label>&nbsp; {{ detailAgent.email }}</label> 
 							</div>							
 						</div>
 						<br>
@@ -341,7 +345,7 @@
 								</div>
 								<div class="col-sm-6">	
 									<div class = "row" align="center">
-										<form class="modal-content animate" name="registerForm">
+										<form class="modal-content animate" name="userLoginForm">
 											<div class="row">
 												<div class="container">
 													<span ng-click="closeModal('loginUser')" class="close" >&times;</span>
@@ -361,10 +365,9 @@
 												<div class = "col-sm-10">
 <!-- 														<input type="text" placeholder="Enter Username" ng-change="lunameToUpper()" -->
 <!-- 															class="form-control" ng-model="luname"> -->
-														<input id="lusername" type="text" placeholder="Enter Username" name="username"
-															class="form-control" ng-model="luname" required ng-change="lunameChange()">
-															
-												<div class="errMsg"> {{	unameErr }}</div>
+														<input type="text" placeholder="Enter Username" name="luname"
+															lass="form-control" ng-model="luname" ng-change="lunameToUpper()" autofocus required>
+														<p id="pval1" class="text-danger" ng-show="userLoginForm.luname.$touched && userLoginForm.luname.$invalid">Enter username</p>	
 												</div> 
 											</div>
 					
@@ -373,8 +376,10 @@
 														<label><b>Password</b></label>
 												</div>
 												<div class="col-sm-10">	
-													<input type="password" placeholder="Enter password" class="form-control" ng-model="lpass">
-												<div class="errMsg" > {{	passwordErr	}}</div>
+													<input name="lpass" type="password" placeholder="Enter password" class="form-control"
+															ng-change="emptyErrMsg()" ng-model="lpass" required>
+													<p id="pval2" class="text-danger" ng-show="userLoginForm.lpass.$touched && userLoginForm.lpass.$invalid">Enter password</p>
+												<div class="errMsg" > {{  passwordErr	}}</div>
 											</div> 
 											</div>
 											
@@ -382,7 +387,7 @@
 												<div class="col-sm-4">			 
 				 									</div>
 													<div class="col-sm-4">			
-														<button type="submit" class="btn btn-lg btn-info"  ng-click="login_user(uname,pass)" >Login</button>
+														<button type="submit" class="btn btn-lg btn-info" ng-disabled="userLoginForm.$invalid" ng-click="login_user(uname,pass)" >Login</button>
 													</div>
 													<div class="col-sm-4">
 													</div>
@@ -415,7 +420,7 @@
 								</div>
 								<div class="col-sm-6">	
 									<div class = "row" align="center">
-										<form class="modal-content animate" name="registerForm">
+										<form class="modal-content animate" name="agentLoginForm">
 											<div class="row">
 												<div class="container">
 													<span ng-click="closeModal('loginAgent')" class="close" >&times;</span>
@@ -474,7 +479,6 @@
 								</div>
 							</div>
 						</div>
-						
 				<!-- login agent modal ends -->
 				
 				
@@ -486,7 +490,7 @@
 								</div>
 								<div class="col-sm-8">	
 									<div class = "row" align="center">
-										<form class="modal-content animate" name="registerForm">
+										<form class="modal-content animate" name="userRegisterForm">
 											<div class="row">
 												<div class="container">
 													<span ng-click="closeModal('registerUser')" class="close" >&times;</span>
@@ -502,16 +506,19 @@
 											<div class="row">
 												<div class="col-sm-2">	
 														<label><b>Firstname</b></label>
+														
 												</div>
 												<div class = "col-sm-4">
-														<input type="text" placeholder="Ex. Aniruddha" ng-change="firstnameToUpper()" ng-model="fname" autofocus required>
+														<input type="text" placeholder="Ex. Aniruddha" ng-change="firstnameToUpper()" name="fname" ng-model="fname" autofocus required>
+														<p id="pval3" class="text-danger" ng-show="userRegisterForm.fname.$touched && userRegisterForm.fname.$invalid">Enter firstname</p>
 														<div class="errMsg" > {{ registerFnameErrMsg }}</div>
 												</div>
 												<div class="col-sm-2">
 														<label><b>Lastname</b></label>
 												</div>
 												<div class="col-sm-4">	
-														<input type="text" placeholder="Ex. Daryapurkar" ng-change="lastnameToUpper()" ng-model="lname" required>
+														<input type="text" placeholder="Ex. Daryapurkar" ng-change="lastnameToUpper()" name="lname" ng-model="lname" required>
+														<p id="pval4" class="text-danger" ng-show="userRegisterForm.lname.$touched && userRegisterForm.lname.$invalid">Enter lastname</p>
 														<div class="errMsg"> {{ registerLnameErrMsg }}</div>
 												</div> 
 											</div>
@@ -521,8 +528,9 @@
 													<label><b>Username</b></label>
 												</div>
 												<div class="col-sm-10">	
-													<input type="text" placeholder="Combination of Alphabets and numbers" ng-model="uname" 
-															ng-change="usernameCheck()" >
+													<input type="text" placeholder="Combination of Alphabets and numbers" ng-model="uname" name="uname" min="6"
+															ng-change="usernameCheck()" required>
+													<p id="pval5" class="text-danger" ng-show="userRegisterForm.uname.$touched && userRegisterForm.uname.$invalid">Enter valid username</p>
 													<div class="errMsg"> {{ registerUnameErrMsg }}</div>
 													<div class="errMsg"> {{ registerUnameUserExists }}</div>
 												</div> 
@@ -533,7 +541,8 @@
 													<label><b>Password</b></label>
 												</div>
 												<div class="col-sm-10">	
-													<input type="password" ng-model="psw" ng-change = "passwordLengthCheck()" >
+													<input type="password" ng-model="psw" name="psw" ng-change = "passwordLengthCheck()" required>
+													<p id="pval6" class="text-danger" ng-show="userRegisterForm.psw.$touched && userRegisterForm.psw.$invalid">Enter password</p>
 													<div class="errMsg"> {{ registerPswErrMsg }}</div>
 												</div> 
 											</div>
@@ -543,7 +552,8 @@
 													<label><b>Re-enter Password</b></label>
 												</div>
 												<div class="col-sm-10">	
-													<input type="password" ng-model="cpsw" required ng-change = "passwordMatch()" >
+													<input type="password" ng-model="cpsw" name="cpsw"  ng-change = "passwordMatch()" required>
+													<p id="pval7" class="text-danger" ng-show="userRegisterForm.cpsw.$touched && userRegisterForm.cpsw.$invalid">Re-enter password</p>
 													<div class="errMsg"> {{ registerCpswErrMsg }}</div>
 												</div> 
 											</div>
@@ -554,7 +564,8 @@
 												</div>
 												<div class="col-sm-10">	
 													<input type="email" placeholder="Ex. abc.mnq@xyz.com" 
-														ng-change="ifUserExists()" ng-model="email"  >	
+														ng-change="ifUserExists()" ng-model="email" name="email" required>	
+													<p id="pval8" class="text-danger" ng-show="userRegisterForm.email.$touched && userRegisterForm.email.$invalid">Enter valid email</p>
 													<div class="errMsg"> {{ registerEmailErrMsg }}</div>
 													<div class="errMsg"> {{ registerEmailUserExists }}</div>
 												</div> 
@@ -566,7 +577,8 @@
 														<label><b>Address</b></label>
 												</div>
 												<div class="col-sm-10">	
-													<input type="text" placeholder="Ex. Block no., Street name, Area" ng-change="addressToUpper()" ng-model="address" required >	
+													<input type="text" placeholder="Ex. Block no., Street name, Area" ng-change="addressToUpper()" ng-model="address" name="address" required >	
+													<p id="pval9" class="text-danger" ng-show="userRegisterForm.address.$touched && userRegisterForm.address.$invalid">Enter address</p>
 													<div class="errMsg"> {{ registerAddressErrMsg }}</div>
 												</div> 
 											</div>
@@ -576,7 +588,8 @@
 														<label><b>Contact</b></label>
 												</div>
 												<div class="col-sm-10">	
-													<input type="number" placeholder="Only digits" ng-model="contact" required>
+													<input type="number" placeholder="Only digits" ng-model="contact" name="contact" required>
+													<p id="pval10" class="text-danger" ng-show="userRegisterForm.contact.$touched && userRegisterForm.contact.$invalid">Enter contact number</p>
 													<div class="errMsg"> {{ registerContactErrMsg }}</div>
 												</div> 
 											</div>
@@ -587,7 +600,8 @@
 														<label><b>State</b></label>
 												</div>
 												<div class = "col-sm-4">
-														<input type="text" placeholder="Ex. Maharashtra" ng-change="stateToUpper()" ng-model="state" required>
+														<input type="text" placeholder="Ex. Maharashtra" ng-change="stateToUpper()" ng-model="state" name="state" required>
+														<p id="pval11" class="text-danger" ng-show="userRegisterForm.state.$touched && userRegisterForm.state.$invalid">Enter state</p>
 														<div class="errMsg"> {{ registerFnameErrMsg }}</div>
 												</div>
 												<div class="col-sm-1">
@@ -597,7 +611,8 @@
 														<label><b>City</b></label>
 												</div>
 												<div class="col-sm-4">	
-														<input type="text" placeholder="Ex. Pune" ng-change="cityToUpper()" ng-model="city" required>
+														<input type="text" placeholder="Ex. Pune" ng-change="cityToUpper()" ng-model="city" name="city" required>
+														<p id="pval12" class="text-danger" ng-show="userRegisterForm.city.$touched && userRegisterForm.city.$invalid">Enter city</p>
 														<div class="errMsg"> {{ registerCityErrMsg }}</div>
 												</div> 
 											</div>
@@ -607,7 +622,7 @@
 												<div class="col-sm-4">			 
 				 									</div>
 													<div class="col-sm-4">			
-														<button class="btn btn-lg btn-info" type="submit"  ng-click="registerUser()" >Register</button>  
+														<button class="btn btn-lg btn-info" type="submit" ng-disabled="userRegisterForm.$invalid" ng-click="registerUser()" >Register</button>  
 													</div>
 													<div class="col-sm-4">
 													</div>
@@ -635,13 +650,13 @@
 			
 						<!-- register agent -->
 <!-- agent registration modal starts -->
-			<div id="registerAgent" class = "modal fade">
+		<div id="registerAgent" class = "modal fade">
 			<div class="row">
 				<div class="col-sm-3">
 				</div>
 				<div class="col-sm-6">	
 					<div class = "row" align="center">
-						<form class="modal-content animate" name="registerForm">
+						<form class="modal-content animate" name="agentRegisterForm">
 							<div class="row">
 								<div class="container">
 									<span ng-click="closeModal('registerAgent')" class="close" >&times;</span>
@@ -651,7 +666,7 @@
 								<center>
 										<img src="images/profile.png" alt="Avatar" width= 20% height=20% >
 										<br>
-										<label class="label-medium-black"> REGISTER AS {{ userType }} </label>
+										<label class="label-medium-black"> REGISTER </label>
 									</center>
 							</div>
 							
@@ -660,62 +675,12 @@
 									<label><b>Username</b></label>
 								</div>
 								<div class="col-sm-9">	
-													<input type="text" placeholder="Combination of Alphabets and numbers" ng-model="uname" 
-															ng-change="usernameCheck()" >
+									<input type="text" placeholder="Combination of Alphabets and numbers" ng-model="uname" name="uname"
+															ng-change="agentnameCheck()" required>
+									<p id="pval13" class="text-danger" ng-show="agentRegisterForm.uname.$touched && agentRegisterForm.uname.$invalid">Enter username</p>
 													<div class="errMsg"> {{ registerUnameErrMsg }}</div>
 													<div class="errMsg"> {{ registerUnameUserExists }}</div>
-												</div> 
-							</div>								
-							<div class="row">
-								<div class="col-sm-3">
-										<label><b>Age</b></label>
-								</div>
-								<div class="col-sm-9">	
-									<input type="number" placeholder="Ex. between 20 to 60" min="20" max="60" ng-model="age" required ng-change="checkAge()">	
-									<div class="errMsg"> {{ registerAgeErrMsg }}</div>
-								</div> 
-							</div>
-							
-							<div class="row">
-								<div class="col-sm-3">	
-										<label><b>Last Qualification</b></label>
-								</div>
-								<div class = "col-sm-9">
-										<select ng-model="qualification" class="pad btn btn-default btn-lg" style="width:100%;" required >
-										<option  value="graduate">Graduate</option>
-										<option  value="postGraduate">Post Graduate</option>
-	</select>
-	<div class="errMsg"> {{ registerQualificationErrMsg }}</div>
-								</div>
-							</div>
-	
-							<div class="row">
-								<div class="col-sm-3">
-										<label><b>Present Occupation</b></label>
-								</div>
-								<div class="col-sm-9">	
-									<input type="text" placeholder="enter occupation" ng-model="occupation" ng-change="occupationToUpper()" required>
-									<div class="errMsg"> {{ registerOccupationErrMsg }}</div>
-								</div> 
-							</div>
-							
-							<div class="row">
-								<div class="col-sm-3">
-									<label><b>Rewards</b></label>
-								</div>
-								<div class="col-sm-9">	
-									<input type="text" ng-model="rewards" ng-change="rewardsToUpper()" required>
-									<div class="errMsg"> {{ rewardsErrMsg }}</div>
-								</div> 
-							</div>
-							
-							<div class="row">
-								<div class="col-sm-3">
-									<label><b>Working Experience</b></label>
-								</div>
-								<div class="col-sm-9">	
-									<input type="number" ng-model="experience" required ng-change = "experienceToUpper()" min="0" max="35" >
-									<div class="errMsg"> {{ experienceErrMsg }}</div>
+													
 								</div> 
 							</div>
 							
@@ -724,7 +689,8 @@
 									<label><b>Email Id</b></label>
 								</div>
 								<div class="col-sm-9">	
-									<input type="email" ng-model="email" required>
+									<input type="email" ng-model="email" name="email" required>
+									<p id="pval19" class="text-danger" ng-show="agentRegisterForm.email.$touched && agentRegisterForm.email.$invalid">Enter valid email</p>
 									<div class="errMsg"> {{ emailErrMsg }}</div>
 								</div> 
 							</div>
@@ -734,11 +700,70 @@
 									<label><b>Contact No.</b></label>
 								</div>
 								<div class="col-sm-9">	
-									<input type="number" ng-model="contact" required>
+									<input type="number" ng-model="contact" name="contact" required>
+									<p id="pval18" class="text-danger" ng-show="agentRegisterForm.contact.$touched && agentRegisterForm.contact.$invalid">Enter contact number</p>
 									<div class="errMsg"> {{ contactErrMsg }}</div>
 								</div> 
 							</div>
 					
+							<div class="row">
+								<div class="col-sm-3">
+										<label><b>Age</b></label>
+								</div>
+								<div class="col-sm-9">	
+									<input type="number" placeholder="Between 20 to 60" min="20" max="60" ng-model="age" name="age" required >	
+									<p id="pval14" class="text-danger" ng-show="agentRegisterForm.age.$touched && agentRegisterForm.age.$invalid">Enter age</p>
+									<div class="errMsg"> {{ registerAgeErrMsg }}</div>
+								</div> 
+							</div>
+							
+							<div class="row">
+								<div class="col-sm-3">	
+										<label><b>Last Qualification</b></label>
+								</div>
+								<div class = "col-sm-9">
+										<select ng-model="qualification" name="qualification"class="pad btn btn-default btn-lg" style="width:100%;" required >
+											<option  value="graduate">Graduate</option>
+											<option  value="postGraduate">Post Graduate</option>
+										</select>
+										<p id="pval15" class="text-danger" ng-show="agentRegisterForm.qualification.$touched && agentRegisterForm.qualification.$invalid">Select qualification</p>
+										<div class="errMsg"> {{ registerQualificationErrMsg }}</div>
+								</div>
+							</div>
+	
+							<div class="row">
+								<div class="col-sm-3">
+										<label><b>Present Occupation</b></label>
+								</div>
+								<div class="col-sm-9">	
+									<input type="text" placeholder="Enter occupation" ng-model="occupation" name="occupation" ng-change="occupationToUpper()" required>
+									<p id="pval16" class="text-danger" ng-show="agentRegisterForm.occupation.$touched && agentRegisterForm.occupation.$invalid">Enter Occupation</p>
+									<div class="errMsg"> {{ registerOccupationErrMsg }}</div>
+								</div> 
+							</div>
+							
+							<div class="row">
+								<div class="col-sm-3">
+									<label><b>Rewards</b></label>
+								</div>
+								<div class="col-sm-9">	
+									<input type="text" ng-model="rewards" name="rewards" ng-change="rewardsToUpper()" required>
+									<p id="pval17" class="text-danger" ng-show="agentRegisterForm.rewards.$touched && agentRegisterForm.rewards.$invalid">Enter rewards</p>
+									<div class="errMsg"> {{ rewardsErrMsg }}</div>
+								</div> 
+							</div>
+							
+							<div class="row">
+								<div class="col-sm-3">
+									<label><b>Working Experience</b></label>
+								</div>
+								<div class="col-sm-9">	
+									<input type="number" ng-model="experience" name="experience" required ng-change = "experienceToUpper()" min="0" max="35" >
+									<p id="pval18" class="text-danger" ng-show="agentRegisterForm.experience.$touched && agentRegisterForm.experience.$invalid">Enter experience in terms of years</p>
+									<div class="errMsg"> {{ experienceErrMsg }}</div>
+								</div> 
+							</div>
+							
 							
 							
 							
@@ -746,7 +771,9 @@
 								<div class="col-sm-4">			 
  									</div>
 									<div class="col-sm-4">			
-										<button class="btn btn-success btn-block" type="submit"  ng-click="registerAgent()" >Register</button>  
+										
+										<button class="btn btn-lg btn-info" type="submit"  ng-disabled="agentRegisterForm.$invalid" ng-click="registerAgent()" >Register</button>
+										<br><br>  
 									</div>
 									<div class="col-sm-4">
 									</div>
@@ -759,17 +786,39 @@
 			</div>
 		</div>
 			
-			<!-- agent registration ends -->
+	<!-- agent registration ends -->
+	
 	
 				
 			
 <!-- modals end here -->
 
 
-
+	<div id="myAlertDialog" class = "modal fade">
+					<div class="col-sm-3"></div>
+					<div class="col-sm-6">
+						<form class="modal-content animate" >	
+			 				<div class="row">
+								<label class="label-large"> {{ header }} </label>
+								<hr style="margin-top:0px; margin-bottom:0px;">
+							</div>	
+							<div class="row">
+								<label>{{ message }}</label>
+								<br><br> 
+							</div>
+						</form>
+					</div>
+					<div class="col-sm-3"></div>
+				</div>
 
 
 
 
 <!-- FOOTER WILL COME FROM THE SHELL PAGE -->
+<!-- <br> -->
+<!-- <div class="foo" align="center"> -->
+<!-- 	<br> -->
+<!-- 	<p > Copyright &copy; www.lifeInsure (All right reserved 2016) </p> -->
+<!-- </div> -->
+
 	

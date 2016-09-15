@@ -1,0 +1,161 @@
+<!-- HEADER WILL COME FROM THE SHELL PAGE -->
+
+
+
+<header>
+	<div class = "row">
+		<div class="col-sm-3">	
+				
+		</div>
+		<div class="col-sm-6" align="right" >
+			<center>
+				<input type="search" placeholder="Search policy">
+				<button type="button" class="btn btn-default search-button"> <span class="glyphicon glyphicon-search"></span> Search </button>
+			</center>
+		</div>
+		<div class="col-sm-3" align="right">
+
+				<label class = "headerlink"> help@lifeInsure.com </label>
+				Login_dropdown		    
+		</div>
+	</div>
+			
+	
+</header>
+
+<div class= "container-fluid" >
+	
+	<div class = "row" >
+		<div class = "col-sm-2" align="justify">
+			<img src = "images/logo1.png" width="171px" height="95px" >
+		</div>
+		<div class = "col-sm-2 common-function" align="center">
+			<a href="#/" class="anchor-big"> <span class="glyphicon glyphicon-home" ng-click="gotoHome()"> Home</span> </a>		
+		</div>
+		<div class = "col-sm-2 common-function" align="center">
+			<a href="#/" class="anchor-big"> <span class = "glyphicon" ng-click="getAllProducts()"> Products </span> </a> 
+		</div>
+		<div class = "col-sm-2 common-function" align="center">
+			<a href="#/" class="anchor-big"> <span class = "glyphicon" ng-click="getAllAgents()"> Agents </span> </a> 
+		</div>
+		<div class = "col-sm-2 common-function" align ="center">
+			<a href="#/" class="anchor-big"> <span class = "glyphicon" > Dummy </span> </a> 
+		</div>
+		<div class = "col-sm-2 common-function" align="center">
+			<a href="#/" class="anchor-big"> <span class = "glyphicon" > Dummy</span> </a> 
+		</div>	
+	</div>
+	
+	
+	<!-- here is all the data to be displayed instead of the background image -->
+			<div class = "row fade in" ng-show="homepageBGImage" >
+				<div class="fade in" >
+					<img src = "images/background3.jpg" width="100%">
+				</div>	
+			</div>		
+	
+			<!--  displays products only  -->
+					<div class = "row"  ng-show="productsDisplayDiv">
+						<div class = "col-sm-3" ></div>
+						<div class = "col-sm-6 " > 	
+							<div class = "fade in" >
+								<div class="row">
+									<div class="col-sm-5">
+										<label class="label-medium"><u>Products</u> <span class="badge"> Total : {{ allProducts.length }}</span></label>
+									</div>
+									<div class="col-sm-7">
+										<input type="search" placeholder="Search " ng-model="searchProductName">
+									</div>
+								</div>
+				
+								<div class="row xxx" ng-repeat= 'product in allProducts | filter : {productName: searchProductName}' >
+									<!-- formating row wise -->
+									<div class="row">
+											<div class="col-sm-3 productImg">
+												<img src="images/logo1.png" width=120px height=70px > 
+											</div>
+											<div class="col-sm-9">
+												<label class="label-medium">{{ product.productName }}</label><br>
+												<label class="label-small">{{ product.termYear }} Years plan for
+												&#8377; {{ product.monthlyPremium }}/month </label> <br>
+												<input class="btn btn-primary" type="button" value="Details"
+														ng-click="viewProductDetails(product)">
+												
+											</div> 
+									</div>
+									<div class=row><hr color="red"></div>
+								</div>
+							</div>
+						</div>
+						<div class = "col-sm-3"></div>
+					</div>
+
+
+			<!--  displays agents only  -->
+				<div class = "row" ng-show="agentsDisplayDiv">
+					<div class = "col-sm-3"></div>
+					<div class = "col-sm-6 " > 	
+						<div class = "fade in"  >
+							<div class="row fade in">
+								<div class="col-sm-5">
+									<label class="label-medium"><u>Agents</u> <span class="badge"> Total : {{ allAgents.length }}</span></label>
+								</div>
+								<div class="col-sm-7">
+									<input type="search" placeholder="Search" ng-model="searchAgentUName">
+								</div>
+							</div>
+			
+							<div class="row xxx" ng-repeat= "agent in allAgents | filter : {userName: searchAgentUName} | orderBy : 'userName' " >
+								<!-- formating row wise -->
+								<div class="row fade in">
+										<div class="col-sm-3 productImg">
+											<img src="images/profile.png" width=120px height=120px > 
+										</div>
+										<div class="col-sm-9">
+											<label class="label-large">{{ agent.userName }} </label> 
+											<label class="label-medium">(Age : {{agent.age}}) </label> <br>
+											
+											<label class="label-small">Experience : {{ agent.workExperience }} Years </label> <br>
+											<label class="label-small">Occupation : {{ agent.present.Occupation }} </label> <br>
+											<input class="btn btn-primary" type="button" value="Details"
+													ng-click="viewAgentDetails(agent)">	
+										</div> 
+									 
+								</div>
+								<div class=row><hr color="red"></div>
+							</div>
+						</div>
+					</div>
+					<div class = "col-sm-3"></div>
+				</div>
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+<!-- FOOTER WILL COME FROM THE SHELL PAGE -->
